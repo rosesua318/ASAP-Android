@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Asap_Front">
+        <activity android:name=".PostActivity"></activity>
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".MyPageActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,6 +23,5 @@
         <activity android:name=".JoinActivity" />
         <activity android:name=".MainActivity" />
     </application>
-
 
 </manifest>
