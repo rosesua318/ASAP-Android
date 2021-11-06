@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Asap_Front">
-        <activity android:name=".PostActivity"></activity>
+        <activity android:name=".EmpPostingActivity"></activity>
+        <activity android:name=".JobPostingActivity" />
+        <activity android:name=".EmpPostListActivityActivity" />
+        <activity android:name=".JobPostListactivity" />
+        <activity android:name=".PostActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".MyPageActivity" />
         <activity android:name=".SplashActivity">
