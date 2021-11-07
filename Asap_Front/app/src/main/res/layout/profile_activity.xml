@@ -43,6 +43,7 @@
                 android:layout_marginTop="5dp"
                 android:gravity="center">
                 <TextView
+                    android:id="@+id/nickProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="닉네임"
@@ -67,14 +68,16 @@
                     android:textStyle="bold"
                     android:textColor="@color/black"/>
                 <TextView
+                    android:id="@+id/recommNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="17"
+                    android:text="0"
                     android:textSize="20dp"
                     android:textStyle="bold"
                     android:textColor="@color/black"/>
                 <Button
+                    android:id="@+id/recommBtn"
                     android:layout_width="50dp"
                     android:layout_height="30dp"
                     android:background="@drawable/recomm_button_border"
@@ -101,13 +104,9 @@
                         android:textSize="20dp"
                         android:textStyle="bold"
                         android:textColor="@color/black"/>
-                    <Spinner
-                        android:layout_marginLeft="15dp"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"/>
                 </LinearLayout>
                 <TextView
+                    android:id="@+id/jobProfile"
                     android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -133,6 +132,7 @@
                     android:textStyle="bold"
                     android:textColor="@color/black"/>
                 <TextView
+                    android:id="@+id/introduceProfile"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="5dp"
