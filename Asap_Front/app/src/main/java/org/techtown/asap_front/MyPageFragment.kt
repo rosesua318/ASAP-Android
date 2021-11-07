@@ -1,10 +1,14 @@
 package org.techtown.asap_front
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.mypage_fragment.*
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,7 +38,48 @@ class MyPageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.mypage_fragment, container, false)
+        val view = inflater.inflate(R.layout.mypage_fragment, container, false)
+
+        val spinner = mypageSpinner
+
+        // 디비에 있는 닉네임, 경력, 자기소개 내용 가져와서 editNick.text 등에 할당
+
+        spinner.setOnItemClickListener { adapterView, view, i, l ->
+            val data = resources.getStringArray(R.array.job)
+            val jText = jobText.text.toString()
+            val token = jText.split(", ")
+
+            var b = true
+            for(t in token.indices) {
+                if(token[t].equals(data[i]))
+                    b = false
+            }
+            if(b) {
+                jobText.text = jText + ", " + data[i].toString()
+            }
+        }
+
+        updateBtn.setOnClickListener {
+            // val edtNick = editNick.text 이렇게 변수들 할당해서
+            // 디비에 갱신하는 함수로직에 매개변수들로 넣어서 갱신시켜줌
+
+            val edtNick = editNick.text
+            val jobText = jobText.text
+            val edtIntro = editIntroduce.text
+        }
+
+        logoutBtn.setOnClickListener {
+            activity?.let {
+                val intent = Intent(context, LoginActivity::class.java)
+                startActivity(intent)
+                val f = requireActivity().supportFragmentManager
+                f.beginTransaction().remove(this).commit()
+                f.popBackStack()
+            }
+
+        }
+
+        return view
     }
 
     companion object {
