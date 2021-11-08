@@ -41,7 +41,7 @@
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:layout_marginRight="10dp"
-                android:textSize="14dp"/>
+                android:textSize="20dp"/>
             <EditText
                 android:id="@+id/edit_id"
                 android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:layout_marginRight="10dp"
-                android:textSize="14dp"/>
+                android:textSize="20dp"/>
             <EditText
                 android:id="@+id/edit_pw"
                 android:layout_width="wrap_content"
@@ -76,7 +76,7 @@
                 android:layout_marginBottom="20dp"
                 android:ems="15"
                 android:backgroundTint="#DFDDDD"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.502"
                 app:layout_constraintStart_toStartOf="parent"
@@ -95,15 +95,15 @@
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:layout_marginRight="10dp"
-                android:textSize="14dp"/>
+                android:textSize="20dp"/>
             <EditText
-                android:id="@+id/edit_pwck"
+                android:id="@+id/edit_ckpw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:ems="15"
                 android:backgroundTint="#DFDDDD"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.502"
                 app:layout_constraintStart_toStartOf="parent"
@@ -123,7 +123,7 @@
                 android:layout_marginRight="10dp"
                 android:text="이름(닉네임)"
                 android:textColor="@color/black"
-                android:textSize="14dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <EditText
@@ -153,7 +153,7 @@
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:layout_marginRight="10dp"
-                android:textSize="14dp"/>
+                android:textSize="20dp"/>
             <EditText
                 android:id="@+id/edit_num"
                 android:layout_width="wrap_content"
@@ -177,6 +177,6 @@
         android:text="완료"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:textSize="20dp"
+        android:textSize="25dp"
         />
 </LinearLayout>
