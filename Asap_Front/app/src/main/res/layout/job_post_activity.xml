@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:background="#006699"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:fontFamily="@font/fontstyle1"
+        android:text="Post"
+        android:textColor="@color/white"
+        android:padding="10dp"/>
+    <ScrollView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/postJobNick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="닉네임"
+                    android:textSize="30dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="30dp"/>
+                <TextView
+                    android:id="@+id/postJobTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="10/29 16:58"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="30dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="30dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/postJobTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="글제목 : 카페 알바 자리 구합니다"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black" />
+                    <TextView
+                        android:id="@+id/postJob"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="경력 : 프랜차이즈 카페 알바"
+                        android:textSize="18dp"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/postJobDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="근무 가능 기간 : 2021.10.15"
+                        android:textSize="18dp"
+                        android:textColor="@color/black" />
+                    <TextView
+                        android:id="@+id/postJobDuringTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="근무 가능 시간 : 8:00~9:00"
+                        android:textSize="18dp"
+                        android:textColor="@color/black" />
+                    <TextView
+                        android:id="@+id/postJobDetail"
+                        android:layout_marginTop="5dp"
+                        android:inputType="textMultiLine"
+                        android:maxLines="10"
+                        android:lines="5"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:scrollbars="vertical"
+                        android:textColor="@color/black"
+                        android:textSize="17dp"
+                        android:text="[상세 내용]"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="#000000"/>
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"/>
+        </LinearLayout>
+
+
+    </ScrollView>
+    <LinearLayout
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/jobSecret"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="비밀"/>
+        <EditText
+            android:id="@+id/jobEditComment"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:hint="댓글을 입력하세요."
+            android:textSize="10dp"
+            android:background="@drawable/enter_comment_border"/>
+        <ImageView
+            android:id="@+id/jobCommentBtn"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="8dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/send"/>
+    </LinearLayout>
+</LinearLayout>
