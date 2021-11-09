@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/job"
+        android:title="구직"/>
+    <item
+        android:id="@+id/emp"
+        android:title="구인"/>
+    <item
+        android:id="@+id/my"
+        android:title="MY"/>
+</menu>
