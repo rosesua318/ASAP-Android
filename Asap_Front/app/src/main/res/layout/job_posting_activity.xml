@@ -47,6 +47,7 @@
                     android:textStyle="bold"
                     android:layout_marginRight="10dp"/>
                 <EditText
+                    android:id="@+id/jTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#DFDDDD"
@@ -70,12 +71,14 @@
                     android:textStyle="bold"
                     android:layout_marginRight="10dp"/>
                 <TextView
+                    android:id="@+id/jJoblist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#DFDDDD"
                     android:ems="15"
                     android:layout_marginRight="10dp"/>
                 <Spinner
+                    android:id="@+id/jSpinner"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -95,6 +98,7 @@
                     android:textStyle="bold"
                     android:layout_marginRight="10dp"/>
                 <EditText
+                    android:id="@+id/jContent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#DFDDDD"
@@ -133,6 +137,7 @@
                         android:text="시작일"
                         android:textColor="@color/black" />
                     <DatePicker
+                        android:id="@+id/jStartDate"
                         android:layout_width="wrap_content"
                         android:layout_height="120dp"
                         android:calendarViewShown="false"
@@ -155,6 +160,7 @@
                         android:textColor="@color/black" />
 
                     <DatePicker
+                        android:id="@+id/jEndDate"
                         android:layout_width="wrap_content"
                         android:layout_height="120dp"
                         android:calendarViewShown="false"
@@ -191,6 +197,7 @@
                         android:textColor="@color/black"
                         android:layout_marginRight="20dp"/>
                     <TimePicker
+                        android:id="@+id/jStartTime"
                         android:layout_width="wrap_content"
                         android:layout_height="120dp"
                         android:timePickerMode="spinner"/>
@@ -204,6 +211,7 @@
                     android:padding="0dp"
                     android:gravity="center_vertical">
                     <TextView
+                        android:id="@+id/jEndTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="종료시간"
@@ -216,6 +224,7 @@
                 </LinearLayout>
             </LinearLayout>
             <Button
+                android:id="@+id/jbtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#DFDDDD"

@@ -17,6 +17,8 @@ class MainActivity() : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //로그인 아이디
+
         nav.setOnNavigationItemSelectedListener(onBottomNavItemSelectedListener)
 
         //기본화면
