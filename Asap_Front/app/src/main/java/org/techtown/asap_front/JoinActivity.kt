@@ -6,11 +6,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import org.techtown.asap_front.data_object.related_user
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.sql.Types.NULL
-import java.util.HashMap
 
 class JoinActivity : AppCompatActivity() {
     private lateinit var retrofitBuilder: RetrofitBuilder
@@ -47,15 +47,22 @@ class JoinActivity : AppCompatActivity() {
             }
             // 회원가입 성공 시
             else {
-                val map = HashMap<String, String>()
+                val map = JoinSend(edtName.text.toString()," ", NULL,related_user(edtNum.text.toString(),edtID.text.toString(),edtPW.text.toString(),edtAge.text.toString().toInt(), edtSex.text.toString().toInt(), edtPW.text.toString()) )
+
+                /*val map = HashMap<String, String>()
+                val map2 = HashMap<String, String>()
+                map.put("introduction", " ")
                 map.put("nickname", edtName.text.toString())
-                map.put("phone_nm", edtNum.text.toString())
-                map.put("login_ID", edtID.text.toString())
-                map.put("login_PW", edtPW.text.toString())
-                map.put("age", edtAge.text.toString())
-                map.put("gender", edtSex.text.toString())
-                map.put("jobs", "")
-                map.put("introduction", "")
+                map.put("jobs", null.toString())
+
+                map2.put("phone_nm", edtNum.text.toString())
+                map2.put("login_ID", edtID.text.toString())
+                map2.put("login_PW", edtPW.text.toString())
+                map2.put("age", edtAge.text.toString())
+                map2.put("gender", edtSex.text.toString())
+                map2.put("password", "Qkrgydnjs99")
+                map.put("related_user", map2.toString())
+                */println(map)
                 val call = retrofitInterface.executeSignup(map)
 
                 call!!.enqueue(object : Callback<Void?> {
@@ -66,7 +73,7 @@ class JoinActivity : AppCompatActivity() {
                             val intent = Intent(applicationContext, LoginActivity::class.java)
                             startActivity(intent)
                         } else {
-                            Toast.makeText(this@JoinActivity, "응답코드 : "+response.code().toString() + " , 회원가입 실패",
+                            Toast.makeText(this@JoinActivity, "응답코드 : "+response.code().toString() + " , 회원가입 실패 "+response.errorBody()+response.message()+response.raw()+response.headers(),
                                     Toast.LENGTH_LONG).show()
                         }
                     }
