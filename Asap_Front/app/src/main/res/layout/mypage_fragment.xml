@@ -30,6 +30,7 @@
             android:layout_gravity="center"
             android:layout_margin="20dp">
             <Button
+                android:id="@+id/logoutBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:text="logout"
@@ -38,34 +39,35 @@
                 android:background="@drawable/logout_button_border"/>
             <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="5dp"
                 android:src="@drawable/user"
                 android:layout_gravity="center"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="5dp"
                 android:gravity="center">
-                <TextView
+                <EditText
+                    android:id="@+id/editNick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="닉네임"
-                    android:textSize="30dp"
+                    android:textSize="25dp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     android:layout_gravity="center"/>
             </LinearLayout>
             <Button
+                android:id="@+id/updateBtn"
                 android:layout_width="50dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
                 android:text="수정"
                 android:background="@drawable/logout_button_border"/>
             <LinearLayout
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -80,10 +82,61 @@
                     android:textStyle="bold"
                     android:textColor="@color/black"/>
                 <TextView
+                    android:id="@+id/recommText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="17"
+                    android:text="0"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/layout_border"
+                android:padding="15dp">
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="성별"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:id="@+id/sText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="여성"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/layout_border"
+                android:padding="15dp">
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="나이"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:id="@+id/ageText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="22"
                     android:textSize="20dp"
                     android:textStyle="bold"
                     android:textColor="@color/black"/>
@@ -108,12 +161,15 @@
                         android:textStyle="bold"
                         android:textColor="@color/black"/>
                     <Spinner
+                        android:id="@+id/mypageSpinner"
                         android:layout_marginLeft="15dp"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:textSize="15dp"/>
+                        android:textSize="15dp"
+                        android:entries="@array/job"/>
                 </LinearLayout>
                 <TextView
+                    android:id="@+id/jobText"
                     android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -139,12 +195,12 @@
                     android:textStyle="bold"
                     android:textColor="@color/black"/>
                 <EditText
+                    android:id="@+id/editIntroduce"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="5dp"
                     android:inputType="textMultiLine"
-                    android:lines="8"
-                    android:minLines="6"
+                    android:lines="5"
                     android:maxLines="10"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"

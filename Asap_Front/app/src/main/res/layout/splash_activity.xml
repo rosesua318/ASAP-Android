@@ -9,10 +9,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="65dp"
+        android:gravity="center"
         android:text="ASAP"
-        android:textSize="80dp"
+        android:textSize="90dp"
         android:textColor="#006699"
         android:shadowRadius="13.0"
         android:shadowDx="12.0"
@@ -24,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="@font/fontstyle2"
+        android:textSize="15dp"
         android:text="As Soon As Possible, 빠르게 확인하는 알바정보"
     />
 </LinearLayout>

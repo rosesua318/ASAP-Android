@@ -69,7 +69,9 @@ class JobPostListFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         //@JvmStatic
-        fun newInstance(): JobPostListFragment{
+        fun newInstance(): JobPostListFragment {
             return JobPostListFragment()
         }
+    }
 }
+

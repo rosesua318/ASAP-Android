@@ -1,7 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<<<<<<< HEAD
     <string-array name="sort">
         <item>등록일순</item>
         <item>시급순</item>
+=======
+    <string-array name="job">
+        <item>서빙</item>
+        <item>주방·조리</item>
+        <item>매장관리·판매</item>
+        <item>영화관·공연장</item>
+        <item>청소·미화</item>
+        <item>주유·세차</item>
+        <item>반려동물 케어</item>
+        <item>피팅모델</item>
+        <item>사무보조</item>
+        <item>번역·통역</item>
+        <item>지게차운전</item>
+        <item>재단·재봉</item>
+        <item>공사건설 현장</item>
+        <item>프로그래머</item>
+        <item>웹·모바일 디자인</item>
+        <item>피트니스 트레이너</item>
+        <item>버스·셔틀 운전</item>
+        <item>발렛파킹</item>
+        <item>택배·배송기사</item>
+>>>>>>> ac4d31e2998fccdb218edbfaa168ff8c40a6b115
     </string-array>
 </resources>

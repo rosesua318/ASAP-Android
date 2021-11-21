@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/postJobNick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="닉네임"
@@ -42,6 +43,7 @@
                     android:layout_marginTop="30dp"
                     android:layout_marginLeft="30dp"/>
                 <TextView
+                    android:id="@+id/postJobTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
@@ -54,45 +56,41 @@
                     android:layout_margin="30dp"
                     android:orientation="vertical">
                     <TextView
+                        android:id="@+id/postJobTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="직종 : 이마트 스태프"
+                        android:text="글제목 : 카페 알바 자리 구합니다"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black" />
+                    <TextView
+                        android:id="@+id/postJob"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="경력 : 프랜차이즈 카페 알바"
+                        android:textSize="18dp"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/postJobDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="근무 가능 기간 : 2021.10.15"
                         android:textSize="18dp"
                         android:textColor="@color/black" />
                     <TextView
+                        android:id="@+id/postJobDuringTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="경력 : 무관"
+                        android:text="근무 가능 시간 : 8:00~9:00"
                         android:textSize="18dp"
                         android:textColor="@color/black" />
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="급여 : 9900"
-                        android:textSize="18dp"
-                        android:textColor="@color/black" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="근무기간 : 1일"
-                        android:textSize="18dp"
-                        android:textColor="@color/black" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="근무 일정 : 2021.10.15"
-                        android:textSize="18dp"
-                        android:textColor="@color/black" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="근무 시간 : 8:00~9:00"
-                        android:textSize="18dp"
-                        android:textColor="@color/black" />
-                    <TextView
+                        android:id="@+id/postJobDetail"
                         android:layout_marginTop="5dp"
                         android:inputType="textMultiLine"
                         android:maxLines="10"
+                        android:lines="5"
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:scrollbars="vertical"
@@ -121,11 +119,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <CheckBox
+            android:id="@+id/jobSecret"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text="익명"/>
+            android:text="비밀"/>
         <EditText
+            android:id="@+id/jobEditComment"
             android:layout_weight="1"
             android:layout_marginLeft="5dp"
             android:layout_width="match_parent"
@@ -135,6 +135,7 @@
             android:textSize="10dp"
             android:background="@drawable/enter_comment_border"/>
         <ImageView
+            android:id="@+id/jobCommentBtn"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
             android:layout_marginTop="8dp"
