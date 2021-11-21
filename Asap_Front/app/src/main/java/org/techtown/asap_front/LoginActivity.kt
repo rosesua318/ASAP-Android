@@ -45,8 +45,8 @@ class LoginActivity : AppCompatActivity() {
             map.put("login_PW", edtPW.text.toString())
 
             val call = retrofitInterface.executeLogin(map)
-            call!!.enqueue(object : Callback<Void?> {
-                override fun onResponse(call: Call<Void?>, response: Response<Void?>) {
+            call!!.enqueue(object : Callback<String?> {
+                override fun onResponse(call: Call<String?>, response: Response<String?>) {
                     if (response.code() == 200) {
                         // 로그인 확인 다이얼로그 출력
                         val builder1 = AlertDialog.Builder(this@LoginActivity)
@@ -56,7 +56,13 @@ class LoginActivity : AppCompatActivity() {
 
                         // 로그인 성공 시 메인화면으로 이동
                         var intent = Intent(applicationContext, MainActivity::class.java)
-                        intent.putExtra("ID", edtID.text.toString()) // 메인화면으로 아이디 전송
+
+                        // 받아온 user_id, login_ID, nickname
+                        var str_arr = response.body().toString().split(",")
+                        // 메인화면으로 전송
+                        intent.putExtra("user_id", str_arr.get(0).split(":")[1])
+                        intent.putExtra("login_ID", edtID.text.toString())
+                        intent.putExtra("nickname", str_arr.get(2).split(":")[1].trim('[').trim('}').trim(']').trim('"'))
                         startActivityForResult(intent, 0)
                     }
                     else {
@@ -64,7 +70,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<Void?>, t: Throwable) {
+                override fun onFailure(call: Call<String?>, t: Throwable) {
                     Toast.makeText(this@LoginActivity, t.message,
                         Toast.LENGTH_LONG).show()
                 }
