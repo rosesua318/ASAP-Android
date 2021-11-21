@@ -42,11 +42,14 @@ class MyPageFragment : Fragment() {
     private var param2: String? = null
     var profile: Profile? = null
 
+    private var userId: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+            userId = it.getString("userId") as String
         }
     }
 
@@ -63,7 +66,7 @@ class MyPageFragment : Fragment() {
         var allJob = HashMap<String, Int>()
 
         // 디비에 있는 닉네임, 경력, 자기소개 내용 가져와서 editNick.text 등에 할당
-        val userId = 1 // 로그인 성공에서부터 가져옴(나중에 구현)
+
         var retrofit = Retrofit.Builder()
                 .baseUrl("https://asap-ds.herokuapp.com")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -90,14 +93,18 @@ class MyPageFragment : Fragment() {
 
         })
 
-        profileService.getProfile(userId).enqueue(object: Callback<Profile> {
+        profileService.getProfile(userId.toInt()).enqueue(object: Callback<Profile> {
             override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
                 profile = response.body()
 
                 editNick.setText(profile?.nickname.toString())
                 Log.d("profile", profile?.nickname.toString())
                 recommText.text = profile?.recomms_cnt.toString()
-                sText.text = profile?.related_user?.gender.toString()
+                if(profile?.related_user?.gender == 0) {
+                    sText.text = "여성"
+                } else {
+                    sText.text = "남성"
+                }
                 ageText.text = profile?.related_user?.age.toString()
 
                 var jobT = ""
@@ -166,7 +173,7 @@ class MyPageFragment : Fragment() {
             jobList.sort()
             Log.d("jobList", jobList.toString())
 
-            var updateJob = UpdateJobBody(jobList, userId)
+            var updateJob = UpdateJobBody(jobList, userId.toInt())
             updateService.updateJob(updateJob).enqueue(object: Callback<PostResult> {
                 override fun onResponse(call: Call<PostResult>, response: Response<PostResult>) {
                     Log.d("log",response.toString())
@@ -182,7 +189,7 @@ class MyPageFragment : Fragment() {
             })
 
             var updateNickIntro = UpdateNickIntroBody(edtNick, edtIntro)
-            updateService.updateNickIntro(userId, updateNickIntro).enqueue(object: Callback<PostResult> {
+            updateService.updateNickIntro(userId.toInt(), updateNickIntro).enqueue(object: Callback<PostResult> {
                 override fun onResponse(call: Call<PostResult>, response: Response<PostResult>) {
                     if(response.code() == 200) {
                         Log.d("log",response.toString())
@@ -211,10 +218,11 @@ class MyPageFragment : Fragment() {
         view.logoutBtn.setOnClickListener {
             activity?.let {
                 val intent = Intent(context, LoginActivity::class.java)
-                startActivity(intent)
                 val f = requireActivity().supportFragmentManager
                 f.beginTransaction().remove(this).commit()
                 f.popBackStack()
+                startActivity(intent)
+
             }
 
         }
