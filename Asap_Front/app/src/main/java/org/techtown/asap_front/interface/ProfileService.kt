@@ -7,7 +7,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface ProfileService {
-    @FormUrlEncoded
     @GET("/users/profiles/{id}")
     fun getProfile(
         @Path("id") id: Int
