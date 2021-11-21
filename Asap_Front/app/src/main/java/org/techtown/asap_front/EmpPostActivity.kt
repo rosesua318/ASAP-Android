@@ -19,7 +19,7 @@ class EmpPostActivity : AppCompatActivity() {
         setContentView(R.layout.emp_post_activity)
 
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://asap-ds.herokuapp.com")
+            .baseUrl("https://asap-ds.herokuapp.com")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         var profileService = retrofit.create(ProfileService::class.java)

@@ -3,6 +3,7 @@ package org.techtown.asap_front
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import kotlinx.android.synthetic.main.emp_post_activity.*
 import kotlinx.android.synthetic.main.job_post_activity.*
 import org.techtown.asap_front.`interface`.ProfileService
@@ -20,7 +21,7 @@ class JobPostActivity : AppCompatActivity() {
         setContentView(R.layout.job_post_activity)
 
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://asap-ds.herokuapp.com")
+            .baseUrl("https://asap-ds.herokuapp.com")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         var profileService = retrofit.create(ProfileService::class.java)
@@ -56,7 +57,7 @@ class JobPostActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<Profile>, t: Throwable) {
-                    TODO("Not yet implemented")
+                    Log.d("log", t.printStackTrace().toString())
                 }
 
             })
