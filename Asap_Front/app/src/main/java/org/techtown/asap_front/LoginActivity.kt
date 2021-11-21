@@ -41,13 +41,13 @@ class LoginActivity : AppCompatActivity() {
         loginBtn.setOnClickListener {
 
             val map = HashMap<String, String>()
-            map.put("id", edtID.text.toString())
-            map.put("pw", edtPW.text.toString())
+            map.put("login_ID", edtID.text.toString())
+            map.put("login_PW", edtPW.text.toString())
 
             val call = retrofitInterface.executeLogin(map)
-            call!!.enqueue(object : Callback<LoginResult?> {
-                override fun onResponse(call: Call<LoginResult?>, response: Response<LoginResult?>) {
-                    if (response.code() == 201) {
+            call!!.enqueue(object : Callback<Void?> {
+                override fun onResponse(call: Call<Void?>, response: Response<Void?>) {
+                    if (response.code() == 200) {
                         // 로그인 확인 다이얼로그 출력
                         val builder1 = AlertDialog.Builder(this@LoginActivity)
                         builder1.setTitle("Login Success")
@@ -55,17 +55,16 @@ class LoginActivity : AppCompatActivity() {
                         builder1.show()
 
                         // 로그인 성공 시 메인화면으로 이동
-
                         var intent = Intent(applicationContext, MainActivity::class.java)
                         intent.putExtra("ID", edtID.text.toString()) // 메인화면으로 아이디 전송
                         startActivityForResult(intent, 0)
                     }
                     else {
-                        Toast.makeText(this@LoginActivity, "아이디와 비밀번호를 다시 확인하세요.", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@LoginActivity, "응답코드 : " + response.code().toString() +", 아이디와 비밀번호를 다시 확인하세요.", Toast.LENGTH_LONG).show()
                     }
                 }
 
-                override fun onFailure(call: Call<LoginResult?>, t: Throwable) {
+                override fun onFailure(call: Call<Void?>, t: Throwable) {
                     Toast.makeText(this@LoginActivity, t.message,
                         Toast.LENGTH_LONG).show()
                 }

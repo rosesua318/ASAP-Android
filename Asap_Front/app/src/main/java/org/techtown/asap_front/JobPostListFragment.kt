@@ -49,4 +49,4 @@ class JobPostListFragment : Fragment() {
         fun newInstance(): JobPostListFragment{
             return JobPostListFragment()
         }
-}
+}}
