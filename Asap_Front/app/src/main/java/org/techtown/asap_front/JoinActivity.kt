@@ -54,7 +54,7 @@ class JoinActivity : AppCompatActivity() {
                 map.put("login_PW", edtPW.text.toString())
                 map.put("age", edtAge.text.toString())
                 map.put("gender", edtSex.text.toString())
-                
+
                 val call = retrofitInterface.executeSignup(map)
 
                 call!!.enqueue(object : Callback<Void?> {
