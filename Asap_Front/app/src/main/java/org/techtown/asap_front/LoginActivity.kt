@@ -4,10 +4,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.HashMap
 
 class LoginActivity : AppCompatActivity() {
+    private lateinit var retrofitBuilder: RetrofitBuilder
+    private lateinit var retrofitInterface : RetrofitInteface
     private lateinit var loginBtn : Button
     private lateinit var signupBtn : Button
     private lateinit var edtID : EditText
@@ -15,6 +22,9 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
+
+        retrofitBuilder = RetrofitBuilder
+        retrofitInterface = retrofitBuilder.api
 
         signupBtn = findViewById(R.id.btn_register)
         loginBtn = findViewById(R.id.btn_login)
@@ -29,18 +39,38 @@ class LoginActivity : AppCompatActivity() {
 
         // 로그인 버튼
         loginBtn.setOnClickListener {
-            edtID.text.toString()
-            edtPW.text.toString()
 
-            // 로그인 확인 다이얼로그 출력
-            val builder1 = AlertDialog.Builder(this@LoginActivity)
-            builder1.setTitle("Login Success")
-            builder1.setMessage(edtID.text.toString() + "님 환영합니다.")
-            builder1.show()
+            val map = HashMap<String, String>()
+            map.put("id", edtID.text.toString())
+            map.put("pw", edtPW.text.toString())
 
-            // 로그인 성공 시 메인화면으로 이동
-            var intent = Intent(applicationContext, MainActivity::class.java)
-            startActivityForResult(intent, 0)
+            val call = retrofitInterface.executeLogin(map)
+            call!!.enqueue(object : Callback<LoginResult?> {
+                override fun onResponse(call: Call<LoginResult?>, response: Response<LoginResult?>) {
+                    if (response.code() == 201) {
+                        // 로그인 확인 다이얼로그 출력
+                        val builder1 = AlertDialog.Builder(this@LoginActivity)
+                        builder1.setTitle("Login Success")
+                        builder1.setMessage(edtID.text.toString() + "님 환영합니다.")
+                        builder1.show()
+
+                        // 로그인 성공 시 메인화면으로 이동
+
+                        var intent = Intent(applicationContext, MainActivity::class.java)
+                        intent.putExtra("ID", edtID.text.toString()) // 메인화면으로 아이디 전송
+                        startActivityForResult(intent, 0)
+                    }
+                    else {
+                        Toast.makeText(this@LoginActivity, "아이디와 비밀번호를 다시 확인하세요.", Toast.LENGTH_LONG).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<LoginResult?>, t: Throwable) {
+                    Toast.makeText(this@LoginActivity, t.message,
+                        Toast.LENGTH_LONG).show()
+                }
+            })
+
         }
     }
 }

@@ -6,9 +6,14 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import java.sql.Types.NULL
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.HashMap
 
 class JoinActivity : AppCompatActivity() {
+    private lateinit var retrofitBuilder: RetrofitBuilder
+    private lateinit var retrofitInterface : RetrofitInteface
     private lateinit var edtID : EditText
     private lateinit var edtPW : EditText
     private lateinit var edtCheckPw : EditText
@@ -18,6 +23,9 @@ class JoinActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.join_activity)
+
+        retrofitBuilder = RetrofitBuilder
+        retrofitInterface = retrofitBuilder.api
 
         edtID = findViewById(R.id.edit_id)
         edtPW = findViewById(R.id.edit_pw)
@@ -30,14 +38,37 @@ class JoinActivity : AppCompatActivity() {
         signBtn.setOnClickListener {
             if(edtID.text.toString().isEmpty() or edtPW.text.toString().isEmpty()or edtCheckPw.text.toString().isEmpty()or edtName.text.toString().isEmpty()or edtNum.text.toString().isEmpty()){
                 Toast.makeText(this@JoinActivity,
-                    "입력하지않은 정보가 있습니다. 모두 채워주세요.", Toast.LENGTH_LONG).show()
+                    "입력하지않은 정보가 있습니다.\n모두 채워주세요.", Toast.LENGTH_LONG).show()
             }
             // 회원가입 성공 시
             else {
-                Toast.makeText(this@JoinActivity,
-                    "회원가입이 완료되었습니다.", Toast.LENGTH_LONG).show()
-                val intent = Intent(applicationContext, LoginActivity::class.java)
-                startActivity(intent)
+                val map = HashMap<String, String>()
+                map.put("id", edtID.text.toString())
+                map.put("pw", edtPW.text.toString())
+                map.put("nickname", edtName.text.toString())
+                map.put("number", edtNum.text.toString())
+
+                val call = retrofitInterface.executeSignup(map)
+
+                call!!.enqueue(object : Callback<Void?> {
+                    override fun onResponse(call: Call<Void?>, response: Response<Void?>) {
+                        if (response.code() == 201) {
+                            Toast.makeText(this@JoinActivity,
+                                    "회원가입이 완료되었습니다.", Toast.LENGTH_LONG).show()
+                            val intent = Intent(applicationContext, LoginActivity::class.java)
+                            startActivity(intent)
+                        } else {
+                            Toast.makeText(this@JoinActivity, "회원가입에 실패했습니다.",
+                                    Toast.LENGTH_LONG).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Void?>, t: Throwable) {
+                        Toast.makeText(this@JoinActivity, t.message,
+                                Toast.LENGTH_LONG).show()
+                    }
+
+                })
             }
         }
     }
