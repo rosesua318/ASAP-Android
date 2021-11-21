@@ -19,8 +19,6 @@
         <activity android:name=".JobPostActivity" />
         <activity android:name=".EmpPostingActivity" />
         <activity android:name=".JobPostingActivity" />
-        <activity android:name=".EmpPostListActivity" />
-        <activity android:name=".JobPostListActivity" />
         <activity android:name=".EmpPostActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".LoginActivity" />

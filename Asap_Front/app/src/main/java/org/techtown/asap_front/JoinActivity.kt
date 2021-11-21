@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.sql.Types.NULL
 import java.util.HashMap
 
 class JoinActivity : AppCompatActivity() {
@@ -19,6 +20,8 @@ class JoinActivity : AppCompatActivity() {
     private lateinit var edtCheckPw : EditText
     private lateinit var edtName : EditText
     private lateinit var edtNum : EditText
+    private lateinit var edtAge : EditText
+    private lateinit var edtSex : EditText
     private lateinit var signBtn : Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +35,8 @@ class JoinActivity : AppCompatActivity() {
         edtCheckPw = findViewById(R.id.edit_ckpw)
         edtName = findViewById(R.id.edit_name)
         edtNum = findViewById(R.id.edit_num)
+        edtAge = findViewById(R.id.edit_age)
+        edtSex = findViewById(R.id.edit_sex)
         signBtn = findViewById(R.id.signupBtn)
 
         // 회원가입 버튼 클릭 시
@@ -43,11 +48,14 @@ class JoinActivity : AppCompatActivity() {
             // 회원가입 성공 시
             else {
                 val map = HashMap<String, String>()
-                map.put("id", edtID.text.toString())
-                map.put("pw", edtPW.text.toString())
                 map.put("nickname", edtName.text.toString())
-                map.put("number", edtNum.text.toString())
-
+                map.put("phone_nm", edtNum.text.toString())
+                map.put("login_ID", edtID.text.toString())
+                map.put("login_PW", edtPW.text.toString())
+                map.put("age", edtAge.text.toString())
+                map.put("gender", edtSex.text.toString())
+                map.put("jobs", "")
+                map.put("introduction", "")
                 val call = retrofitInterface.executeSignup(map)
 
                 call!!.enqueue(object : Callback<Void?> {
@@ -58,7 +66,7 @@ class JoinActivity : AppCompatActivity() {
                             val intent = Intent(applicationContext, LoginActivity::class.java)
                             startActivity(intent)
                         } else {
-                            Toast.makeText(this@JoinActivity, "회원가입에 실패했습니다.",
+                            Toast.makeText(this@JoinActivity, "응답코드 : "+response.code().toString() + " , 회원가입 실패",
                                     Toast.LENGTH_LONG).show()
                         }
                     }

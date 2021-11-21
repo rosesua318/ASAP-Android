@@ -8,9 +8,11 @@
     android:layout_height="match_parent"
     android:background="@drawable/background">
     <TextView
+        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
         android:textAlignment="center"
         android:background="#006699"
         android:textStyle="bold"
@@ -19,164 +21,223 @@
         android:text="JOIN"
         android:textColor="@color/white"
         android:padding="10dp"/>
-    <LinearLayout
+    <ScrollView
+        android:layout_weight="7"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="25dp"
-        android:layout_gravity="left"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_height="wrap_content">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-            <TextView
+            android:orientation="vertical"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="아이디"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:layout_marginRight="10dp"
-                android:textSize="20dp"/>
-            <EditText
-                android:id="@+id/edit_id"
+                android:padding="10dp"
+                android:layout_marginBottom="15dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="아이디"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginRight="10dp"
+                    android:textSize="20dp"/>
+                <EditText
+                    android:id="@+id/edit_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:ems="15"
+                    android:backgroundTint="#DFDDDD"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.502"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:ems="15"
-                android:backgroundTint="#DFDDDD"
-                android:inputType="textPersonName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.502"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-            <TextView
+                android:padding="10dp"
+                android:layout_marginBottom="15dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="비밀번호"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginRight="10dp"
+                    android:textSize="20dp"/>
+                <EditText
+                    android:id="@+id/edit_pw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:ems="15"
+                    android:backgroundTint="#DFDDDD"
+                    android:inputType="textPassword"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.502"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="비밀번호"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:layout_marginRight="10dp"
-                android:textSize="20dp"/>
-            <EditText
-                android:id="@+id/edit_pw"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:ems="15"
-                android:backgroundTint="#DFDDDD"
-                android:inputType="textPassword"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.502"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="비밀번호 확인"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:layout_marginRight="10dp"
-                android:textSize="20dp"/>
-            <EditText
-                android:id="@+id/edit_ckpw"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:ems="15"
-                android:backgroundTint="#DFDDDD"
-                android:inputType="textPassword"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.502"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </LinearLayout>
+                android:padding="10dp"
+                android:layout_marginBottom="15dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="비밀번호 확인"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginRight="10dp"
+                    android:textSize="20dp"/>
+                <EditText
+                    android:id="@+id/edit_ckpw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:ems="15"
+                    android:backgroundTint="#DFDDDD"
+                    android:inputType="textPassword"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.502"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:text="이름(닉네임)"
-                android:textColor="@color/black"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:padding="10dp"
+                android:layout_marginBottom="15dp"
+                android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/edit_name"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:text="이름(닉네임)"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edit_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:backgroundTint="#DFDDDD"
+                    android:ems="15"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.502"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:backgroundTint="#DFDDDD"
-                android:ems="15"
-                android:inputType="textPersonName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.502"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:padding="10dp"
+                android:layout_marginBottom="15dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="나이"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginRight="10dp"
+                    android:textSize="20dp"/>
+                <EditText
+                    android:id="@+id/edit_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:ems="15"
+                    android:backgroundTint="#DFDDDD"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.502"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginBottom="15dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="성별"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginRight="10dp"
+                    android:textSize="20dp"/>
+                <EditText
+                    android:id="@+id/edit_sex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:ems="15"
+                    android:backgroundTint="#DFDDDD"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.502"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginBottom="15dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전화번호"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginRight="10dp"
+                    android:textSize="20dp"/>
+                <EditText
+                    android:id="@+id/edit_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:ems="15"
+                    android:backgroundTint="#DFDDDD"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.502"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="전화번호"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:layout_marginRight="10dp"
-                android:textSize="20dp"/>
-            <EditText
-                android:id="@+id/edit_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:ems="15"
-                android:backgroundTint="#DFDDDD"
-                android:inputType="textPersonName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.502"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
     <Button
+        android:layout_weight="1"
         android:id="@+id/signupBtn"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_gravity="center_horizontal"
         android:backgroundTint="#DFDDDD"
         android:text="완료"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:textSize="25dp"
-        />
+        android:textSize="25dp" />
 </LinearLayout>

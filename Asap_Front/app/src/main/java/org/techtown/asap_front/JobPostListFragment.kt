@@ -51,3 +51,4 @@ class JobPostListFragment : Fragment() {
         }
     }
 }
+
