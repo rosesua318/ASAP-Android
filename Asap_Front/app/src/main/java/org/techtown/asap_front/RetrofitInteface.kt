@@ -9,6 +9,6 @@ interface RetrofitInteface {
     @POST("/users/login/")
     fun executeLogin(@Body map: HashMap<String, String>): Call<String?>?
 
-    @POST("/users/profiles")
+    @POST("/users/profiles/")
     fun executeSignup(@Body map: JoinSend): Call<Void?>?
 }

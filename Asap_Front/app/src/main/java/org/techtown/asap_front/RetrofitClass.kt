@@ -10,6 +10,6 @@ data class LoginResult(
 data class JoinSend(
         var nickname: String,
         var introduction: String,
-        var jobs: Int,
+        var jobs: String,
         var related_user: related_user
 )

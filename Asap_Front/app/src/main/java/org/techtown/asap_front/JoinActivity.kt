@@ -47,22 +47,9 @@ class JoinActivity : AppCompatActivity() {
             }
             // 회원가입 성공 시
             else {
-                val map = JoinSend(edtName.text.toString()," ", NULL,related_user(edtNum.text.toString(),edtID.text.toString(),edtPW.text.toString(),edtAge.text.toString().toInt(), edtSex.text.toString().toInt(), edtPW.text.toString()) )
-
-                /*val map = HashMap<String, String>()
-                val map2 = HashMap<String, String>()
-                map.put("introduction", " ")
-                map.put("nickname", edtName.text.toString())
-                map.put("jobs", null.toString())
-
-                map2.put("phone_nm", edtNum.text.toString())
-                map2.put("login_ID", edtID.text.toString())
-                map2.put("login_PW", edtPW.text.toString())
-                map2.put("age", edtAge.text.toString())
-                map2.put("gender", edtSex.text.toString())
-                map2.put("password", "Qkrgydnjs99")
-                map.put("related_user", map2.toString())
-                */println(map)
+                val map = JoinSend(edtName.text.toString()," ", "null",related_user(edtNum.text.toString(),edtID.text.toString(),edtPW.text.toString(),edtAge.text.toString().toInt(), edtSex.text.toString().toInt(), edtPW.text.toString()))
+                
+                println(map)
                 val call = retrofitInterface.executeSignup(map)
 
                 call!!.enqueue(object : Callback<Void?> {
