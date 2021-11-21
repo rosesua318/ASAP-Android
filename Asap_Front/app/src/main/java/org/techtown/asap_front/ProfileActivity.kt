@@ -20,7 +20,7 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_activity)
 
-        var userId = 2 // 사용자 userId(나중에 로그인에서부터 받아옴)
+        var userId = 1 // 사용자 userId(나중에 로그인에서부터 받아옴)
 
         // 디비에 있는 추천수, 경력, 자기소개 내용 가져오기
         var related_userId = intent.getStringExtra("related_user_id")
@@ -56,12 +56,17 @@ class ProfileActivity : AppCompatActivity() {
 
         // 가져온 추천수 개수를 recommNum.text에 할당
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://asap-ds.herokuapp.com")
+            .baseUrl("https://asap-ds.herokuapp.com")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         var recommService = retrofit.create(RecommService::class.java)
+
+        if (userId == related_userId?.toInt()) {
+            recommBtn.setEnabled(false)
+        }
+
         recommBtn.setOnClickListener {
-            val data = RecommBody(userId, related_userId!!.toInt())
+            val data = RecommBody(related_userId!!.toInt(), related_userId!!.toInt())
             recommService.recommend(data).enqueue(object : Callback<PostResult> {
                 override fun onResponse(call: Call<PostResult>, response: Response<PostResult>) {
                     Log.d("log",response.toString())
