@@ -8,6 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.mypage_fragment.*
+import org.techtown.asap_front.`interface`.ProfileService
+import org.techtown.asap_front.data_object.Profile
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -24,6 +31,7 @@ class MyPageFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    var profile: Profile? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +51,41 @@ class MyPageFragment : Fragment() {
         val spinner = mypageSpinner
 
         // 디비에 있는 닉네임, 경력, 자기소개 내용 가져와서 editNick.text 등에 할당
+        val userId = 1 // 로그인 성공에서부터 가져옴(나중에 구현)
+        var retrofit = Retrofit.Builder()
+            .baseUrl("http://asap-ds.herokuapp.com")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        var profileService = retrofit.create(ProfileService::class.java)
+
+        profileService.getProfile(userId).enqueue(object: Callback<Profile> {
+            override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
+                profile = response.body()
+
+                editNick.setText(profile?.nickname)
+                recommText.text = profile?.recomms_cnt.toString()
+                sText.text = profile?.related_user?.gender.toString()
+                ageText.text = profile?.related_user?.age.toString()
+
+                var jobT = ""
+                val jobs = profile?.jobs
+                if(jobs != null) {
+                    for(i in jobs.indices) {
+                        jobT += jobs.get(i).job_name
+                        if(i <= (jobs.size-2)) {
+                            jobT += ", "
+                        }
+                    }
+                }
+                jobText.text = jobT
+                editIntroduce.setText(profile?.introduction)
+            }
+
+            override fun onFailure(call: Call<Profile>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
 
         spinner.setOnItemClickListener { adapterView, view, i, l ->
             val data = resources.getStringArray(R.array.job)
@@ -92,13 +135,9 @@ class MyPageFragment : Fragment() {
          * @return A new instance of fragment MyPageFragment.
          */
         // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MyPageFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        //@JvmStatic
+        fun newInstance(): MyPageFragment{
+            return MyPageFragment()
+        }
     }
 }
