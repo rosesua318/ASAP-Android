@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/2021-SoftwareEngineering/local/ASAP-Android/Asap_Front/app/src/main/res/layout/emp_post_list_fragment.xml" value="0.1082427536231884" />
+        <entry key="..\:/2021-SoftwareEngineering/local/ASAP-Android/Asap_Front/app/src/main/res/layout/emp_posting_activity.xml" value="0.1082427536231884" />
+        <entry key="..\:/2021-SoftwareEngineering/local/ASAP-Android/Asap_Front/app/src/main/res/layout/job_post_list_fragment.xml" value="0.1082427536231884" />
+        <entry key="..\:/2021-SoftwareEngineering/local/ASAP-Android/Asap_Front/app/src/main/res/layout/job_posting_activity.xml" value="0.1082427536231884" />
+        <entry key="..\:/2021-SoftwareEngineering/local/ASAP-Android/Asap_Front/app/src/main/res/layout/mypage_fragment.xml" value="0.1082427536231884" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

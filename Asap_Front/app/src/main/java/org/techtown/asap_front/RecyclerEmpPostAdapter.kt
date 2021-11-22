@@ -38,7 +38,7 @@ class RecyclerEmpPostAdapter(private val items: ArrayList<EmpPost>, val context:
                 }
             }
             view.jobs.text = "경력: " + t
-            view.hourly_pay.text = item.hourly_pay.toString()
+            view.hourly_pay.text = "시급: "+item.hourly_pay.toString()
             view.date.text = "근무가능기간: "+item.start_date+"~"+item.end_date
             view.time.text = "근무가능시간: "+item.start_time+"~"+item.end_time
         }

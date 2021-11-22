@@ -65,7 +65,7 @@ class EmpPostListFragment : Fragment() {
             }
         }
 
-        sortingSpinner.setSelection(1)
+        //sortingSpinner.setSelection(1)
         sortingSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val data = resources.getStringArray(R.array.emppost_sort)
