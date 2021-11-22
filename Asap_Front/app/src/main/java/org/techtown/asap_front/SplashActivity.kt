@@ -20,7 +20,7 @@ class SplashActivity : AppCompatActivity() {
 
         backgroundExecutor.schedule({
             mainExecutor.execute{
-                val intent = Intent(applicationContext, LoginActivity::class.java)
+                val intent = Intent(applicationContext, EmpPostActivity::class.java)
                 startActivity(intent)
                 finish()
             }
