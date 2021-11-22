@@ -6,11 +6,11 @@ data class JobPost(
     val id: Int,
     val profile: Profile,
     val title: String,
-    val jobs: ArrayList<Job>,
+    val jobs: ArrayList<Int>,
     val start_date: String, //Date? String?
     val end_date: String, //Date? String?
     val start_time: String, //Time? String?
     val end_time: String, //Time? String?
-    val created_at: ZonedDateTime,
+    val created_at: String,
     val content: String
 )

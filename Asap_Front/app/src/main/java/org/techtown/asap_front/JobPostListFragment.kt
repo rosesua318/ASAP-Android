@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.job_post_list_fragment.*
 import kotlinx.android.synthetic.main.job_post_list_fragment.view.*
 import org.techtown.asap_front.`interface`.JobPostListService
+import org.techtown.asap_front.`interface`.JobService
+import org.techtown.asap_front.data_object.Job
 import org.techtown.asap_front.data_object.JobPost
 import retrofit2.Call
 import retrofit2.Callback
@@ -78,8 +80,8 @@ class JobPostListFragment : Fragment() {
         return view
     }
 
-    private fun setAdapter(postList: ArrayList<JobPost>){
-        val adapter = RecyclerJobPostAdapter(postList, requireActivity())
+    private fun setAdapter(postList: ArrayList<JobPost>, allJob: HashMap<Int, String>){
+        val adapter = RecyclerJobPostAdapter(postList, requireActivity(), allJob)
         job_recyclerview.adapter = adapter
         job_recyclerview.layoutManager = LinearLayoutManager(requireActivity())
     }
@@ -89,13 +91,33 @@ class JobPostListFragment : Fragment() {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         var JobPostListService = retrofit.create(JobPostListService::class.java)
+        var allJob = HashMap<Int, String>()
+        var jobService = retrofit.create(JobService::class.java)
+
+        jobService.getJobs().enqueue(object: Callback<List<Job>> {
+            override fun onResponse(call: Call<List<Job>>, response: Response<List<Job>>) {
+                var jobs = response.body()
+
+                if(jobs != null) {
+                    for(i in jobs.indices) {
+                        allJob.put(jobs.get(i).id, jobs.get(i).job_name)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Job>>, t: Throwable) {
+                Log.d("log",t.message.toString())
+                Log.d("log","fail")
+            }
+
+        })
 
         JobPostListService.getAllPosts().enqueue(object : Callback<ArrayList<JobPost>>{
             override fun onResponse(call: Call<ArrayList<JobPost>>, response: Response<ArrayList<JobPost>>) {
                 if(response.isSuccessful){
                     val body = response.body()
                     body?.let{
-                        setAdapter(body)
+                        setAdapter(body, allJob)
                     }
                 }
             }
