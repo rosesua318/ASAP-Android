@@ -19,20 +19,25 @@ class MainActivity() : AppCompatActivity(){
     lateinit var myPageFragment: MyPageFragment
 
     private var user_id = ""
+    private var nickname = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+        /*
         recyclerView1 = findViewById(R.id.recyclerView_job)
         recyclerView1.layoutManager = GridLayoutManager(this, 1)
 
         recyclerView2 = findViewById(R.id.recyclerView_emp)
         recyclerView2.layoutManager = GridLayoutManager(this, 1)
 
+
+         */
         user_id = intent.getStringExtra("user_id").toString()
         var login_ID = intent.getStringExtra("login_ID")
-        var nickname = intent.getStringExtra("nickname")
+        nickname = intent.getStringExtra("nickname").toString()
 
         nav.setOnNavigationItemSelectedListener(onBottomNavItemSelectedListener)
 
@@ -43,6 +48,7 @@ class MainActivity() : AppCompatActivity(){
             val fragment1 = JobPostListFragment()
             val bundle = Bundle()
             bundle.putString("userId", user_id)
+            bundle.putString("nickname", nickname)
             fragment1.arguments = bundle
             replace(R.id.fragment_frame, fragment1)
             commit()
@@ -57,6 +63,7 @@ class MainActivity() : AppCompatActivity(){
                     val fragment1 = JobPostListFragment()
                     val bundle = Bundle()
                     bundle.putString("userId", user_id)
+                    bundle.putString("nickname", nickname)
                     fragment1.arguments = bundle
                     replace(R.id.fragment_frame, fragment1)
                     commit()
@@ -67,6 +74,7 @@ class MainActivity() : AppCompatActivity(){
                     val fragment2 = EmpPostListFragment()
                     val bundle = Bundle()
                     bundle.putString("userId", user_id)
+                    bundle.putString("nickname", nickname)
                     fragment2.arguments = bundle
                     replace(R.id.fragment_frame, fragment2)
                     commit()

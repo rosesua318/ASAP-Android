@@ -53,8 +53,8 @@ class EmpPostActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView_emp)
         recyclerView.layoutManager = GridLayoutManager(this, 1)
         val adapter = Comment1_Adapter()
-        val id = 1 // 임시 id, 연결되면 로그인에서 아이디 가져오기
-        val call = retrofitInterface.executeComment2(id)
+        val userId = intent.getStringExtra("userId")?.toInt()
+        val call = retrofitInterface.executeComment2(userId!!.toInt())
 
         call!!.enqueue(object : Callback<ArrayList<Comment_1>> {
             override fun onResponse(call: Call<ArrayList<Comment_1>>, response: Response<ArrayList<Comment_1>>) {
@@ -99,10 +99,11 @@ class EmpPostActivity : AppCompatActivity() {
 
         val postId = intent.getIntExtra("postId", 0)
         val profId = intent.getIntExtra("profId", 0)
+        val nickname = intent.getStringExtra("nickname")
         var allJob = HashMap<Int, String>()
 
         // 만약 글작성자라면 비밀 댓글 체크박스 비활성화
-        val userId = intent.getStringExtra("userId")?.toInt()
+
         if(profId == userId) {
             empSecret.setEnabled(false)
         }
@@ -197,7 +198,7 @@ class EmpPostActivity : AppCompatActivity() {
             } else {
                 // 공개 댓글로 구분하여 디비에 저장
             }
-            val comment = CommentBody(postId, profId, empEditComment.text.toString(), b)
+            val comment = CommentBody(postId, userId!!, empEditComment.text.toString(), b)
             commentService.addCommentEmp(comment).enqueue(object: Callback<PostResult> {
                 override fun onResponse(call: Call<PostResult>, response: Response<PostResult>) {
                     Log.d("log",response.toString())
@@ -210,6 +211,8 @@ class EmpPostActivity : AppCompatActivity() {
 
             })
             empEditComment.setText("")
+
+            //adapter.items.add()
         }
     }
 }

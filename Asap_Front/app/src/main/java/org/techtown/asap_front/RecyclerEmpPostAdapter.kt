@@ -11,11 +11,11 @@ import kotlinx.android.synthetic.main.emp_post_item.view.*
 import org.techtown.asap_front.data_object.EmpPost
 import java.util.*
 
-class RecyclerEmpPostAdapter(private val items: ArrayList<EmpPost>, val context: Context, val allJob: HashMap<Int, String>, val userId: String): RecyclerView.Adapter<RecyclerEmpPostAdapter.ViewHolder>() {
+class RecyclerEmpPostAdapter(private val items: ArrayList<EmpPost>, val context: Context, val allJob: HashMap<Int, String>, val userId: String, val nickname: String): RecyclerView.Adapter<RecyclerEmpPostAdapter.ViewHolder>() {
     override fun getItemCount(): Int = items.size
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
-        holder.bind(item, context, allJob, userId)
+        holder.bind(item, context, allJob, userId, nickname)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,7 +24,7 @@ class RecyclerEmpPostAdapter(private val items: ArrayList<EmpPost>, val context:
     }
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v){
         private var view: View = v
-        fun bind(item: EmpPost, context: Context, allJob: HashMap<Int, String>, userId: String){
+        fun bind(item: EmpPost, context: Context, allJob: HashMap<Int, String>, userId: String, nickname: String){
             view.title.text = "글제목: "+item.title
             //데이터로 받아온 경력(jobs) ','로 연결해서 string 타입으로 변환
             var t = ""
@@ -48,6 +48,7 @@ class RecyclerEmpPostAdapter(private val items: ArrayList<EmpPost>, val context:
                     putExtra("postId", item.id)
                     putExtra("profId", item.profile.related_user_id)
                     putExtra("userId", userId)
+                    putExtra("nickname", nickname)
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
                 }.run { context.startActivity(this)}
