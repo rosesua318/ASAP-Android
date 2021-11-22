@@ -26,14 +26,9 @@ class MainActivity() : AppCompatActivity(){
 
         recyclerView1 = findViewById(R.id.recyclerView_job)
         recyclerView1.layoutManager = GridLayoutManager(this, 1)
-        val adapter = Comment1_Adapter()
 
         recyclerView2 = findViewById(R.id.recyclerView_emp)
         recyclerView2.layoutManager = GridLayoutManager(this, 1)
-        val adapter2 = Comment1_Adapter()
-
-        recyclerView1.adapter = adapter
-        recyclerView2.adapter = adapter2
 
         user_id = intent.getStringExtra("user_id").toString()
         var login_ID = intent.getStringExtra("login_ID")

@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Asap_Front">
-        <activity android:name=".SplashActivity">
+        <activity android:name=".EmpPostActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -19,7 +19,6 @@
         <activity android:name=".JobPostActivity" />
         <activity android:name=".EmpPostingActivity" />
         <activity android:name=".JobPostingActivity" />
-        <activity android:name=".EmpPostActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".JoinActivity" />
