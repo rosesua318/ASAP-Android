@@ -10,16 +10,17 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.emp_post_activity.*
 import kotlinx.android.synthetic.main.job_post_activity.*
 import org.techtown.asap_front.`interface`.CommentService
+import org.techtown.asap_front.`interface`.JobPostListService
+import org.techtown.asap_front.`interface`.JobService
 import org.techtown.asap_front.`interface`.ProfileService
-import org.techtown.asap_front.data_object.Comment1_Adapter
-import org.techtown.asap_front.data_object.CommentBody
-import org.techtown.asap_front.data_object.PostResult
-import org.techtown.asap_front.data_object.Profile
+import org.techtown.asap_front.data_object.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.ArrayList
+import java.util.HashMap
 
 class JobPostActivity : AppCompatActivity() {
     private lateinit var retrofitBuilder: RetrofitBuilder
@@ -75,14 +76,66 @@ class JobPostActivity : AppCompatActivity() {
             }
         })
 
-        val postId = 1
-        val profId = 10 // postId를 넣으면 profId db에서 가져오는 로직으로 구함
+        val postId = intent.getIntExtra("postId", 0)
+        val profId = intent.getIntExtra("profId", 0)
+        var allJob = HashMap<Int, String>()
 
         // 만약 글작성자라면 비밀 댓글 체크박스 비활성화
-        val userId = 2 // 로그인에서부터 가져옴(나중에 로그인 기능 완성되면 구현)
-        if(profId == userId) {
+        val userId = intent.getStringExtra("userId")
+        Log.d("JobPostUserId", userId!!)
+        if(profId == userId?.toInt()) {
             empSecret.setEnabled(false)
         }
+
+        var jobService = retrofit.create(JobService::class.java)
+
+        jobService.getJobs().enqueue(object: Callback<List<Job>> {
+            override fun onResponse(call: Call<List<Job>>, response: Response<List<Job>>) {
+                var jobs = response.body()
+
+                if(jobs != null) {
+                    for(i in jobs.indices) {
+                        allJob.put(jobs.get(i).id, jobs.get(i).job_name)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Job>>, t: Throwable) {
+                Log.d("log",t.message.toString())
+                Log.d("log","fail")
+            }
+
+        })
+
+        var jobPostListService = retrofit.create(JobPostListService::class.java)
+        jobPostListService.getPost(postId).enqueue(object : Callback<JobPost> {
+            override fun onResponse(call: Call<JobPost>, response: Response<JobPost>) {
+                val body = response.body()
+                postJobNick.text = body?.profile?.nickname
+                postJobTime.text = body?.created_at!!.substring(0, body?.created_at!!.indexOf("."))
+                postJobTitle.text = "글제목 : " + body?.title
+                var t = ""
+                for(i in body?.jobs!!.indices) {
+                    if(allJob.containsKey(body?.jobs[i])) {
+                        if ( i != body?.jobs.size - 1) {
+                            t += allJob.get(body.jobs[i]) + ","
+                            Log.d("t text", t)
+                        } else {
+                            t += allJob.get(body.jobs[i])
+                        }
+                    }
+                }
+                postJob.text = "경력 : " + t
+                postJobDate.text = "근무 가능 기간 : " + body?.start_date.toString() + "~" + body?.end_date.toString()
+                postJobDuringTime.text = "근무 가능 시간 : " + body?.start_time.toString() + "~" + body?.end_time.toString()
+                postJobDetail.text = "[상세 내용]\n" + body?.content
+            }
+
+            override fun onFailure(call: Call<JobPost>, t: Throwable) {
+                Log.d("log",t.message.toString())
+            }
+
+        })
 
         postJobNick.setOnClickListener {
 

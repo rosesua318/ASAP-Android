@@ -37,12 +37,14 @@ class EmpPostListFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var userId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+            userId = it.getString("userId") as String
         }
     }
 
@@ -81,8 +83,8 @@ class EmpPostListFragment : Fragment() {
         return view
     }
 
-    private fun setAdapter(postList: ArrayList<EmpPost>, allJob: HashMap<Int, String>){
-        val adapter = RecyclerEmpPostAdapter(postList, requireActivity(), allJob)
+    private fun setAdapter(postList: ArrayList<EmpPost>, allJob: HashMap<Int, String>, userId: String){
+        val adapter = RecyclerEmpPostAdapter(postList, requireActivity(), allJob, userId)
         emp_recyclerview.adapter = adapter
         emp_recyclerview.layoutManager = LinearLayoutManager(requireActivity())
     }
@@ -119,7 +121,7 @@ class EmpPostListFragment : Fragment() {
                     val body = response.body()
 
                     body?.let {
-                        setAdapter(body, allJob)
+                        setAdapter(body, allJob, userId)
                     }
                 }
             }
