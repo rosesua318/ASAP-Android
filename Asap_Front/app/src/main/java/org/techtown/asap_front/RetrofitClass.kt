@@ -1,4 +1,15 @@
 package org.techtown.asap_front
 
-data class LoginResult(var login_ID: String, var login_PW : String, var nickname: String,
-                       var phone_nm : String, var age : String, var gender : String)
+import org.techtown.asap_front.data_object.related_user
+
+data class LoginResult(
+        var user_id : Int,
+        var login_ID: String,
+        var nickname: String)
+
+data class JoinSend(
+        var nickname: String,
+        var introduction: String,
+        var jobs: String,
+        var related_user: related_user
+)

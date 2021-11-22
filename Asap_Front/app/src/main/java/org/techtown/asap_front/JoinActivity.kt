@@ -2,15 +2,13 @@ package org.techtown.asap_front
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import org.techtown.asap_front.data_object.related_user
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.sql.Types.NULL
-import java.util.HashMap
 
 class JoinActivity : AppCompatActivity() {
     private lateinit var retrofitBuilder: RetrofitBuilder
@@ -21,7 +19,9 @@ class JoinActivity : AppCompatActivity() {
     private lateinit var edtName : EditText
     private lateinit var edtNum : EditText
     private lateinit var edtAge : EditText
-    private lateinit var edtSex : EditText
+    private lateinit var rGroupSex : RadioGroup
+    private lateinit var rButton1 : RadioButton
+    private lateinit var rButton2 : RadioButton
     private lateinit var signBtn : Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +36,14 @@ class JoinActivity : AppCompatActivity() {
         edtName = findViewById(R.id.edit_name)
         edtNum = findViewById(R.id.edit_num)
         edtAge = findViewById(R.id.edit_age)
-        edtSex = findViewById(R.id.edit_sex)
+        rGroupSex = findViewById(R.id.rGroup)
+        rButton1 = findViewById(R.id.female)
+        rButton2 = findViewById(R.id.male)
         signBtn = findViewById(R.id.signupBtn)
+
+        val sex_ : Int
+        if(rButton1.isChecked){ sex_ = 0 }
+        else { sex_ = 1 }
 
         // 회원가입 버튼 클릭 시
         signBtn.setOnClickListener {
@@ -47,13 +53,8 @@ class JoinActivity : AppCompatActivity() {
             }
             // 회원가입 성공 시
             else {
-                val map = HashMap<String, String>()
-                map.put("nickname", edtName.text.toString())
-                map.put("phone_nm", edtNum.text.toString())
-                map.put("login_ID", edtID.text.toString())
-                map.put("login_PW", edtPW.text.toString())
-                map.put("age", edtAge.text.toString())
-                map.put("gender", edtSex.text.toString())
+                val map = JoinSend(edtName.text.toString()," ", "null",related_user(edtNum.text.toString(),edtID.text.toString(),edtPW.text.toString(),edtAge.text.toString().toInt(), sex_, edtPW.text.toString()))
+                println(map) // 보내는 데이터 확인
 
                 val call = retrofitInterface.executeSignup(map)
 
@@ -65,7 +66,7 @@ class JoinActivity : AppCompatActivity() {
                             val intent = Intent(applicationContext, LoginActivity::class.java)
                             startActivity(intent)
                         } else {
-                            Toast.makeText(this@JoinActivity, "응답코드 : "+response.code().toString() + " , 회원가입 실패",
+                            Toast.makeText(this@JoinActivity, "응답코드 : "+response.code().toString() + " , 회원가입 실패 "+response.errorBody()+response.message()+response.raw()+response.headers(),
                                     Toast.LENGTH_LONG).show()
                         }
                     }

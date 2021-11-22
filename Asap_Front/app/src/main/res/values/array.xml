@@ -9,14 +9,14 @@
         <item>근무시작시간순</item>
     </string-array>
     <string-array name="job">
-        <item>서빙</item>
+        <!--<item>서빙</item>-->
         <item>주방·조리</item>
-        <item>매장관리·판매</item>
+        <!--<item>매장관리·판매</item>-->
         <item>영화관·공연장</item>
         <item>청소·미화</item>
         <item>주유·세차</item>
-        <item>반려동물 케어</item>
-        <item>피팅모델</item>
+        <!--<item>반려동물 케어</item>-->
+        <!--<item>피팅모델</item>-->
         <item>사무보조</item>
         <item>번역·통역</item>
         <item>지게차운전</item>
@@ -28,5 +28,6 @@
         <item>버스·셔틀 운전</item>
         <item>발렛파킹</item>
         <item>택배·배송기사</item>
+        <item>요리사</item>
     </string-array>
 </resources>
