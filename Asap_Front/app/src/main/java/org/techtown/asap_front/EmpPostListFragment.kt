@@ -92,6 +92,7 @@ class EmpPostListFragment : Fragment() {
                 .build()
         var EmpPostListService = retrofit.create(EmpPostListService::class.java)
 
+        /*
         EmpPostListService.getAllPosts().enqueue(object : Callback<ArrayList<EmpPost>> {
             override fun onResponse(call: Call<ArrayList<EmpPost>>, response: Response<ArrayList<EmpPost>>) {
                 if (response.isSuccessful) {
@@ -106,7 +107,7 @@ class EmpPostListFragment : Fragment() {
                     Log.d("log",t.message.toString())
                     Log.d("log","fail")
                 }
-        })
+        })*/
     }
     companion object {
         /**

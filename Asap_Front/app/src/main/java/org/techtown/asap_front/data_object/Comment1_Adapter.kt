@@ -1,5 +1,6 @@
 package org.techtown.asap_front.data_object
 
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +26,6 @@ class Comment1_Adapter : RecyclerView.Adapter<Comment1_Adapter.ViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        print("아이템 사이즈 : "+items.size)
         if (items != null) {
             return items.size
         } else {
@@ -37,12 +37,14 @@ class Comment1_Adapter : RecyclerView.Adapter<Comment1_Adapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         init{
             itemView.setOnClickListener{
-                println("아무거나 ")
+                // 프로필로 넘어가기
+
             }
         }
         fun setItem(item: Comment_1){
-            itemView.commentContent.text = "item.content"
-            itemView.commentNick.text = "item.profile.toString()"
+            itemView.commentContent.text = item.content
+            itemView.commentNick.text = item.created_at
+
         }
     }
 }

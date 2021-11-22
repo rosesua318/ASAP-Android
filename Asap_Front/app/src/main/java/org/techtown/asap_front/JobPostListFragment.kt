@@ -1,9 +1,7 @@
 package org.techtown.asap_front
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +12,6 @@ import kotlinx.android.synthetic.main.job_post_list_fragment.*
 import kotlinx.android.synthetic.main.job_post_list_fragment.view.*
 import org.techtown.asap_front.`interface`.JobPostListService
 import org.techtown.asap_front.data_object.JobPost
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
@@ -89,7 +84,7 @@ class JobPostListFragment : Fragment() {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         var JobPostListService = retrofit.create(JobPostListService::class.java)
-
+/*
         JobPostListService.getAllPosts().enqueue(object : Callback<ArrayList<JobPost>>{
             override fun onResponse(call: Call<ArrayList<JobPost>>, response: Response<ArrayList<JobPost>>) {
                 if(response.isSuccessful){
@@ -105,7 +100,7 @@ class JobPostListFragment : Fragment() {
                 Log.d("log","fail")
             }
         })
-
+*/
     }
     companion object {
         /**

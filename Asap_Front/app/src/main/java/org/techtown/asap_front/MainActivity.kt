@@ -3,11 +3,16 @@ package org.techtown.asap_front
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import org.techtown.asap_front.data_object.Comment1_Adapter
 
 
 class MainActivity() : AppCompatActivity(){
+    private lateinit var recyclerView1 : RecyclerView
+    private lateinit var recyclerView2 : RecyclerView
 
     lateinit var jobPostListFragment: JobPostListFragment
     lateinit var empPostListFragment: EmpPostListFragment
@@ -19,6 +24,16 @@ class MainActivity() : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        recyclerView1 = findViewById(R.id.recyclerView_job)
+        recyclerView1.layoutManager = GridLayoutManager(this, 1)
+        val adapter = Comment1_Adapter()
+
+        recyclerView2 = findViewById(R.id.recyclerView_emp)
+        recyclerView2.layoutManager = GridLayoutManager(this, 1)
+        val adapter2 = Comment1_Adapter()
+
+        recyclerView1.adapter = adapter
+        recyclerView2.adapter = adapter2
 
         user_id = intent.getStringExtra("user_id").toString()
         var login_ID = intent.getStringExtra("login_ID")

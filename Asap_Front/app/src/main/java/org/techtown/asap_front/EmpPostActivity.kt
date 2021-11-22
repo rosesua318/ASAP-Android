@@ -1,12 +1,17 @@
 package org.techtown.asap_front
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import kotlinx.android.synthetic.main.emp_post_activity.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.techtown.asap_front.`interface`.CommentService
 import org.techtown.asap_front.`interface`.ProfileService
 import org.techtown.asap_front.data_object.Comment1_Adapter
@@ -23,7 +28,9 @@ class EmpPostActivity : AppCompatActivity() {
     private lateinit var retrofitBuilder: RetrofitBuilder
     private lateinit var retrofitInterface : RetrofitInteface
     var profile: Profile? = null
-    var comment1: Comment_1? = null
+    var comment1: ArrayList<Comment_1>? = null
+    var commentArray = ArrayList<Comment_1>()
+    var indexNum : Int = 0
     private lateinit var recyclerView : RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,24 +53,46 @@ class EmpPostActivity : AppCompatActivity() {
         recyclerView.layoutManager = GridLayoutManager(this, 1)
         val adapter = Comment1_Adapter()
         val id = 1 // 임시 id, 연결되면 로그인에서 아이디 가져오기
-/*
         val call = retrofitInterface.executeComment2(id)
-        call!!.enqueue(object : Callback<Comment_1?> {
-            override fun onResponse(call: Call<Comment_1?>, response: Response<Comment_1?>) {
+
+        call!!.enqueue(object : Callback<ArrayList<Comment_1>> {
+            override fun onResponse(call: Call<ArrayList<Comment_1>>, response: Response<ArrayList<Comment_1>>) {
                 comment1 = response.body()
-                println(response.body())
-                adapter.items.add(Comment_1(comment1!!.id,comment1!!.content,comment1!!.created_at,comment1!!.is_anon,comment1!!.post,comment1!!.profile))
-                recyclerView.adapter = adapter
+                println("응답 출력 : "+response.code()+" , "+ response.body())
+                for(i in comment1!!.indices){
+                    indexNum += 1
+                    commentArray.add(Comment_1(comment1!![i].id,comment1!![i].content,"",comment1!![i].is_anon,comment1!![i].post,comment1!![i].profile))
+                }
                 // 확인 차 출력
+                println("indexNum 값 : "+indexNum)
                 println("응답코드 : " + response.code().toString()+response.message())
             }
 
-            override fun onFailure(call: Call<Comment_1?>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<Comment_1>>, t: Throwable) {
                 Toast.makeText(this@EmpPostActivity, t.message,
                         Toast.LENGTH_LONG).show()
             }
         })
-*/
+        println("인덱스 길이 : "+indexNum)
+        GlobalScope.launch {    // 2
+            delay(18000)
+            Log.d(TAG, "done something in Coroutine")   // 3
+
+            for(i in 0 .. (indexNum-1)){
+                profileService.getProfile(comment1!![i].profile).enqueue(object: Callback<Profile> {
+                    override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
+                        profile = response.body()
+                        println(response.body())
+                        commentArray!![i].created_at = profile!!.nickname
+                        print(profile!!.nickname)
+                        adapter.items.add(commentArray!![i])
+                        recyclerView.adapter = adapter
+                    }
+
+                    override fun onFailure(call: Call<Profile>, t: Throwable) { }
+                })
+            }
+        }
 
 
         val postId = 1
