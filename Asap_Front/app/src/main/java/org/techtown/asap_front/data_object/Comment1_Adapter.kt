@@ -1,12 +1,14 @@
 package org.techtown.asap_front.data_object
 
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.comment_item.view.*
 import org.techtown.asap_front.Comment_1
+import org.techtown.asap_front.ProfileActivity
 import org.techtown.asap_front.R
 
 // 어댑터는 보여지는 View와 그 View에 올릴 Data를 연결하는 일종의 Bridge
@@ -42,8 +44,13 @@ class Comment1_Adapter : RecyclerView.Adapter<Comment1_Adapter.ViewHolder>() {
             }
         }
         fun setItem(item: Comment_1){
+            if(item.is_anon){
+                itemView.commentNick.text = "익명"
+            }
+            else{
+                itemView.commentNick.text = item.created_at
+            }
             itemView.commentContent.text = item.content
-            itemView.commentNick.text = item.created_at
 
         }
     }
