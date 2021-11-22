@@ -8,7 +8,6 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 
 interface EmpPostListService {
-    @FormUrlEncoded
     @GET("/get_staff/posts/")
-    fun getAllPosts(): Call<EmpPost>
+    fun getAllPosts(): Call<ArrayList<EmpPost>>
 }

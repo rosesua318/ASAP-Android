@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.emp_post_list_fragment.*
 import kotlinx.android.synthetic.main.emp_post_list_fragment.view.*
 import org.techtown.asap_front.`interface`.EmpPostListService
+import org.techtown.asap_front.`interface`.JobService
 import org.techtown.asap_front.data_object.EmpPost
+import org.techtown.asap_front.data_object.Job
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -80,8 +82,8 @@ class EmpPostListFragment : Fragment() {
         return view
     }
 
-    private fun setAdapter(postList: ArrayList<EmpPost>){
-        val adapter = RecyclerEmpPostAdapter(postList, requireActivity())
+    private fun setAdapter(postList: ArrayList<EmpPost>, allJob: HashMap<Int, String>){
+        val adapter = RecyclerEmpPostAdapter(postList, requireActivity(), allJob)
         emp_recyclerview.adapter = adapter
         emp_recyclerview.layoutManager = LinearLayoutManager(requireActivity())
     }
@@ -91,6 +93,26 @@ class EmpPostListFragment : Fragment() {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         var EmpPostListService = retrofit.create(EmpPostListService::class.java)
+        var allJob = HashMap<Int, String>()
+        var jobService = retrofit.create(JobService::class.java)
+
+        jobService.getJobs().enqueue(object: Callback<List<Job>> {
+            override fun onResponse(call: Call<List<Job>>, response: Response<List<Job>>) {
+                var jobs = response.body()
+
+                if(jobs != null) {
+                    for(i in jobs.indices) {
+                        allJob.put(jobs.get(i).id, jobs.get(i).job_name)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Job>>, t: Throwable) {
+                Log.d("log",t.message.toString())
+                Log.d("log","fail")
+            }
+
+        })
 
         EmpPostListService.getAllPosts().enqueue(object : Callback<ArrayList<EmpPost>> {
             override fun onResponse(call: Call<ArrayList<EmpPost>>, response: Response<ArrayList<EmpPost>>) {
@@ -98,7 +120,7 @@ class EmpPostListFragment : Fragment() {
                     val body = response.body()
 
                     body?.let {
-                        setAdapter(body)
+                        setAdapter(body, allJob)
                     }
                 }
             }

@@ -1,6 +1,7 @@
 package org.techtown.asap_front
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +10,11 @@ import kotlinx.android.synthetic.main.emp_post_item.view.*
 import org.techtown.asap_front.data_object.EmpPost
 import java.util.*
 
-class RecyclerEmpPostAdapter(private val items: ArrayList<EmpPost>, val context: Context): RecyclerView.Adapter<RecyclerEmpPostAdapter.ViewHolder>() {
+class RecyclerEmpPostAdapter(private val items: ArrayList<EmpPost>, val context: Context, val allJob: HashMap<Int, String>): RecyclerView.Adapter<RecyclerEmpPostAdapter.ViewHolder>() {
     override fun getItemCount(): Int = items.size
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
-        holder.bind(item, context)
+        holder.bind(item, context, allJob)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -22,10 +23,21 @@ class RecyclerEmpPostAdapter(private val items: ArrayList<EmpPost>, val context:
     }
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v){
         private var view: View = v
-        fun bind(item: EmpPost, context: Context){
+        fun bind(item: EmpPost, context: Context, allJob: HashMap<Int, String>){
             view.title.text = "글제목: "+item.title
             //데이터로 받아온 경력(jobs) ','로 연결해서 string 타입으로 변환
-            view.jobs.text = "경력: " +"item.jobs"
+            var t = ""
+            for(i in item.jobs.indices) {
+                if(allJob.containsKey(item.jobs[i])) {
+                    if ( i != item.jobs.size - 1) {
+                        t += allJob.get(item.jobs[i]) + ","
+                        Log.d("t text", t)
+                    } else {
+                        t += allJob.get(item.jobs[i])
+                    }
+                }
+            }
+            view.jobs.text = "경력: " + t
             view.hourly_pay.text = item.hourly_pay.toString()
             view.date.text = "근무가능기간: "+item.start_date+"~"+item.end_date
             view.time.text = "근무가능시간: "+item.start_time+"~"+item.end_time

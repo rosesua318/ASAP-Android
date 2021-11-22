@@ -6,9 +6,8 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface JobPostListService {
-    @FormUrlEncoded
     @GET("/search_job/posts/")
-    fun getAllPosts(): Call<JobPost>
+    fun getAllPosts(): Call<ArrayList<JobPost>>
 
     @POST("/search_job/posts/")
     fun post(
