@@ -38,6 +38,7 @@ class JobPostListFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var userId: String = ""
+    private var nickname: String = ""
 
     private var adapter : RecyclerJobPostAdapter? = null
 
@@ -47,6 +48,7 @@ class JobPostListFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
             userId = it.getString("userId") as String
+            nickname = it.getString("nickname") as String
         }
     }
 
@@ -130,8 +132,8 @@ class JobPostListFragment : Fragment() {
         return view
     }
 
-    private fun setAdapter(postList: ArrayList<JobPost>, allJob: HashMap<Int, String>, userId: String){
-        adapter = RecyclerJobPostAdapter(postList, requireActivity(), allJob, userId)
+    private fun setAdapter(postList: ArrayList<JobPost>, allJob: HashMap<Int, String>, userId: String, nickname: String){
+        adapter = RecyclerJobPostAdapter(postList, requireActivity(), allJob, userId, nickname)
         job_recyclerview.adapter = adapter
         job_recyclerview.layoutManager = LinearLayoutManager(requireActivity())
 
@@ -170,7 +172,7 @@ class JobPostListFragment : Fragment() {
                 if(response.isSuccessful){
                     val body = response.body()
                     body?.let{
-                        setAdapter(body, allJob, userId)
+                        setAdapter(body, allJob, userId, nickname)
                     }
                 }
             }
