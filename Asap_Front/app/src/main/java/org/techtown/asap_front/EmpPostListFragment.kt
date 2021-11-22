@@ -1,10 +1,14 @@
 package org.techtown.asap_front
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.emp_post_list_fragment.*
+import org.techtown.asap_front.data_object.EmpPost
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,6 +40,30 @@ class EmpPostListFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.emp_post_list_fragment, container, false)
+
+        val sortingSpinner=eSortingSpinner
+
+        //post 데이터 받아오기
+        var list = ArrayList<EmpPost>()
+        //요약정보 리사이클러뷰에 담기
+        //리사이클러뷰 어댑터 연결
+        val adapter = RecyclerEmpPostAdapter(list)
+        emp_recyclerview.adapter = adapter
+        
+        eWriteBtn.setOnClickListener { //구인작성 액티비티로 이동
+            //?
+            activity?.let{
+                val intent = Intent(it, EmpPostingActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
+        sortingSpinner.setOnItemClickListener{ adapterView, view, i, l ->//스피너에서 정렬기준 선택되면
+            val data = resources.getStringArray(R.array.emppost_sort)
+            //선택된 정렬기준 전송
+            //재정렬된 포스트 데이터 가져와
+            //리사이클러뷰 재출력
+        }
     }
 
     companion object {

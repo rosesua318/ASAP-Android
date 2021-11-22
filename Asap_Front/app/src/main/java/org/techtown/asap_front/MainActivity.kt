@@ -19,6 +19,7 @@ class MainActivity() : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         user_id = intent.getStringExtra("user_id").toString()
         var login_ID = intent.getStringExtra("login_ID")
         var nickname = intent.getStringExtra("nickname")

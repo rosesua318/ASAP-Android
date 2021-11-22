@@ -10,6 +10,7 @@
         android:padding="15dp"
         android:layout_margin="20dp">
         <TextView
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="글제목: 이마트 알바생 구합니다."
@@ -18,24 +19,28 @@
             android:textSize="25dp"
             android:layout_marginBottom="10dp" />
         <TextView
+            android:id="@+id/jobs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="직종: 이마트스태프"
             android:textColor="@color/black"
             android:textSize="20dp"/>
         <TextView
+            android:id="@+id/hourly_pay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="급여: 9900"
             android:textColor="@color/black"
             android:textSize="20dp"/>
         <TextView
+            android:id="@+id/date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="근무일정: 2021.00.00 ~ 2021.00.00"
             android:textColor="@color/black"
             android:textSize="20dp"/>
         <TextView
+            android:id="@+id/time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="근무시간: 12:00 ~ 18:00"
