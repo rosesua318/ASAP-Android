@@ -10,14 +10,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Asap_Front">
-<<<<<<< HEAD
-        <activity android:name=".EmpPostingActivity"></activity>
-        <activity android:name=".JobPostingActivity" />
-        <activity android:name=".PostActivity" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".MyPageActivity" />
-=======
->>>>>>> ac4d31e2998fccdb218edbfaa168ff8c40a6b115
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

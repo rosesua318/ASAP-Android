@@ -13,6 +13,7 @@ class JobPostingActivity : AppCompatActivity() {
             val title=jTitle.text.toString() 
             val content=jContent.text.toString()
             //경력 정보
+
             //날짜(start, end)
             //시간(start, end)
             

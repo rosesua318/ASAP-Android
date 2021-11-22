@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<<<<<<< HEAD
-    <string-array name="sort">
+    <string-array name="jobpost_sort">
         <item>등록일순</item>
         <item>시급순</item>
-=======
+    </string-array>
+    <string-array name="emppost_sort">
+        <item>등록일순</item>
+        <item>근무시작시간순</item>
+    </string-array>
     <string-array name="job">
         <item>서빙</item>
         <item>주방·조리</item>
@@ -25,6 +28,5 @@
         <item>버스·셔틀 운전</item>
         <item>발렛파킹</item>
         <item>택배·배송기사</item>
->>>>>>> ac4d31e2998fccdb218edbfaa168ff8c40a6b115
     </string-array>
 </resources>
