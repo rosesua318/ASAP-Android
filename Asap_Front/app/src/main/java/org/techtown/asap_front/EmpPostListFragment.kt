@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.emp_post_list_fragment.*
 import kotlinx.android.synthetic.main.emp_post_list_fragment.view.*
 import org.techtown.asap_front.`interface`.EmpPostListService
@@ -52,35 +53,7 @@ class EmpPostListFragment : Fragment() {
 
         val sortingSpinner=view.eSortingSpinner
 
-        var retrofit = Retrofit.Builder()
-                .baseUrl("https://asap-ds.herokuapp.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-        var EmpPostListService = retrofit.create(EmpPostListService::class.java)
-
-        EmpPostListService.getAllPosts().enqueue(object : Callback<EmpPost> {
-            override fun onResponse(call: Call<EmpPost>, response: Response<EmpPost>) {
-                if(response.isSuccessful){
-                    val body = response.body()
-
-                    body?.let{
-                        //setAdapter(it.)
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<EmpPost>, t: Throwable) {
-                Log.d("log",t.message.toString())
-                Log.d("log","fail")
-            }
-        })
-
-        //post 데이터 받아오기
-        var list = ArrayList<EmpPost>()
-        //요약정보 리사이클러뷰에 담기
-        //리사이클러뷰 어댑터 연결
-        val adapter = RecyclerEmpPostAdapter(list)
-        view.emp_recyclerview.adapter = adapter
+        loadData()
         
         view.eWriteBtn.setOnClickListener { //구인작성 액티비티로 이동
             //?
@@ -107,6 +80,34 @@ class EmpPostListFragment : Fragment() {
         return view
     }
 
+    private fun setAdapter(postList: ArrayList<EmpPost>){
+        val adapter = RecyclerEmpPostAdapter(postList, requireActivity())
+        emp_recyclerview.adapter = adapter
+        emp_recyclerview.layoutManager = LinearLayoutManager(requireActivity())
+    }
+    private fun loadData(){
+        var retrofit = Retrofit.Builder()
+                .baseUrl("https://asap-ds.herokuapp.com")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        var EmpPostListService = retrofit.create(EmpPostListService::class.java)
+
+        EmpPostListService.getAllPosts().enqueue(object : Callback<EmpPost> {
+            override fun onResponse(call: Call<EmpPost>, response: Response<EmpPost>) {
+                if (response.isSuccessful) {
+                    val body = response.body()
+
+                    body?.let {
+                        setAdapter(it.)
+                    }
+                }
+            }
+            override fun onFailure(call: Call<EmpPost>, t: Throwable) {
+                    Log.d("log",t.message.toString())
+                    Log.d("log","fail")
+                }
+        })
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of

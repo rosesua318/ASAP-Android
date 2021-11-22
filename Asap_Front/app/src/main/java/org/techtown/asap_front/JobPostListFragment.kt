@@ -54,13 +54,6 @@ class JobPostListFragment : Fragment() {
 
         loadData()
 
-        //post 데이터 받아오기
-        var list = ArrayList<JobPost>()
-        //요약정보 리사이클러뷰에 담기
-        //리사이클러뷰 어댑터 연결
-        val adapter = RecyclerJobPostAdapter(list)
-        view.job_recyclerview.adapter = adapter
-
         view.jWriteBtn.setOnClickListener {//구직작성 액티비티로 이동
             //?
             activity?.let{
