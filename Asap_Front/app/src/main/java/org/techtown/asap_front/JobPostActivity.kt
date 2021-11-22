@@ -57,8 +57,8 @@ class JobPostActivity : AppCompatActivity() {
 
         // 아래는 테스트 코드
         adapter1 = Comment1_Adapter()
-
-        val call = retrofitInterface.executeComment1(userId!!.toInt())
+        val postId = intent.getIntExtra("postId", 0)
+        val call = retrofitInterface.executeComment1(postId)
 
         call!!.enqueue(object : Callback<ArrayList<Comment_1>> {
             override fun onResponse(call: Call<ArrayList<Comment_1>>, response: Response<ArrayList<Comment_1>>) {
@@ -97,7 +97,7 @@ class JobPostActivity : AppCompatActivity() {
         }
 
 
-        val postId = intent.getIntExtra("postId", 0)
+
         val profId = intent.getIntExtra("profId", 0)
         val nickname = intent.getStringExtra("nickname")
         var allJob = HashMap<Int, String>()

@@ -54,7 +54,8 @@ class EmpPostActivity : AppCompatActivity() {
         recyclerView.layoutManager = GridLayoutManager(this, 1)
         val adapter = Comment1_Adapter()
         val userId = intent.getStringExtra("userId")?.toInt()
-        val call = retrofitInterface.executeComment2(userId!!.toInt())
+        val postId = intent.getIntExtra("postId", 0)
+        val call = retrofitInterface.executeComment2(postId)
 
         call!!.enqueue(object : Callback<ArrayList<Comment_1>> {
             override fun onResponse(call: Call<ArrayList<Comment_1>>, response: Response<ArrayList<Comment_1>>) {
@@ -97,7 +98,7 @@ class EmpPostActivity : AppCompatActivity() {
 
 
 
-        val postId = intent.getIntExtra("postId", 0)
+
         val profId = intent.getIntExtra("profId", 0)
         val nickname = intent.getStringExtra("nickname")
         var allJob = HashMap<Int, String>()
