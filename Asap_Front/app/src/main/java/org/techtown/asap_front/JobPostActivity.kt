@@ -6,7 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import kotlinx.android.synthetic.main.emp_post_activity.*
 import kotlinx.android.synthetic.main.job_post_activity.*
+import org.techtown.asap_front.`interface`.CommentService
 import org.techtown.asap_front.`interface`.ProfileService
+import org.techtown.asap_front.data_object.CommentBody
+import org.techtown.asap_front.data_object.PostResult
 import org.techtown.asap_front.data_object.Profile
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,6 +28,7 @@ class JobPostActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         var profileService = retrofit.create(ProfileService::class.java)
+        var commentService = retrofit.create(CommentService::class.java)
         var act = this
 
         // 디비에서 가져와서 해당 내용 텍스트뷰들에 할당
@@ -32,8 +36,8 @@ class JobPostActivity : AppCompatActivity() {
 
 
 
-        val postId = 3
-        val profId = 1 // postId를 넣으면 profId db에서 가져오는 로직으로 구함
+        val postId = 1
+        val profId = 10 // postId를 넣으면 profId db에서 가져오는 로직으로 구함
 
         // 만약 글작성자라면 비밀 댓글 체크박스 비활성화
         val userId = 2 // 로그인에서부터 가져옴(나중에 로그인 기능 완성되면 구현)
@@ -74,11 +78,24 @@ class JobPostActivity : AppCompatActivity() {
 
         jobCommentBtn.setOnClickListener {
             if(b) {
-                // 비밀 댓글로 구분하여 디비에 저장
+
             } else {
                 // 공개 댓글로 구분하여 디비에 저장
             }
+            // 비밀 댓글로 구분하여 디비에 저장
+            val comment = CommentBody(postId, profId, jobEditComment.text.toString(), b)
+            commentService.addCommentJob(comment).enqueue(object: Callback<PostResult> {
+                override fun onResponse(call: Call<PostResult>, response: Response<PostResult>) {
+                    Log.d("log",response.toString())
+                    Log.d("log", response.body().toString())
+                }
 
+                override fun onFailure(call: Call<PostResult>, t: Throwable) {
+                    Log.d("log",t.message.toString())
+                }
+
+            })
+            jobEditComment.setText("")
         }
     }
 }
