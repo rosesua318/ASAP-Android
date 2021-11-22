@@ -40,7 +40,7 @@ class JobPostActivity : AppCompatActivity() {
         setContentView(R.layout.job_post_activity)
         retrofitBuilder = RetrofitBuilder
         retrofitInterface = retrofitBuilder.api
-        val id = 1 // 임시 id, 연결되면 로그인에서 아이디 가져오기
+        val userId = intent.getStringExtra("userId")
 
         var retrofit = Retrofit.Builder()
             .baseUrl("https://asap-ds.herokuapp.com")
@@ -58,7 +58,7 @@ class JobPostActivity : AppCompatActivity() {
         // 아래는 테스트 코드
         adapter1 = Comment1_Adapter()
 
-        val call = retrofitInterface.executeComment1(id)
+        val call = retrofitInterface.executeComment1(userId!!.toInt())
 
         call!!.enqueue(object : Callback<ArrayList<Comment_1>> {
             override fun onResponse(call: Call<ArrayList<Comment_1>>, response: Response<ArrayList<Comment_1>>) {
@@ -99,10 +99,11 @@ class JobPostActivity : AppCompatActivity() {
 
         val postId = intent.getIntExtra("postId", 0)
         val profId = intent.getIntExtra("profId", 0)
+        val nickname = intent.getStringExtra("nickname")
         var allJob = HashMap<Int, String>()
 
         // 만약 글작성자라면 비밀 댓글 체크박스 비활성화
-        val userId = intent.getStringExtra("userId")
+
         Log.d("JobPostUserId", userId!!)
         if(profId == userId?.toInt()) {
             empSecret.setEnabled(false)
