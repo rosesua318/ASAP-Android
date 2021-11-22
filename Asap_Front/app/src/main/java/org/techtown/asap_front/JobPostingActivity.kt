@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import kotlinx.android.synthetic.main.job_posting_activity.*
+import org.techtown.asap_front.data_object.JobPost
 import java.util.*
 
 class JobPostingActivity : AppCompatActivity() {
@@ -12,6 +13,8 @@ class JobPostingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.job_posting_activity)
 
+        //사용자 id
+        val id=1
         //데이트피커
         jStartDate.minDate = System.currentTimeMillis()
         jEndDate.minDate = System.currentTimeMillis()
