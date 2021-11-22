@@ -1,6 +1,7 @@
 package org.techtown.asap_front
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,11 +19,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 import kotlin.collections.HashMap
 
-class RecyclerJobPostAdapter(private val items: ArrayList<JobPost>, val context: Context, val allJob: HashMap<Int, String>): RecyclerView.Adapter<RecyclerJobPostAdapter.ViewHolder>(){
+class RecyclerJobPostAdapter(private val items: ArrayList<JobPost>, val context: Context, val allJob: HashMap<Int, String>, val userId: String): RecyclerView.Adapter<RecyclerJobPostAdapter.ViewHolder>(){
     override fun getItemCount(): Int = items.size
     override fun onBindViewHolder(holder: RecyclerJobPostAdapter.ViewHolder, position: Int){
         val item = items[position]
-        holder.bind(item, context, allJob)
+        holder.bind(item, context, allJob, userId)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerJobPostAdapter.ViewHolder {
@@ -34,7 +35,7 @@ class RecyclerJobPostAdapter(private val items: ArrayList<JobPost>, val context:
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v){
         private var view: View = v
 
-        fun bind(item: JobPost, context: Context, allJob: HashMap<Int, String>){
+        fun bind(item: JobPost, context: Context, allJob: HashMap<Int, String>, userId: String){
             view.title.text = "글제목: "+item.title
             //데이터로 받아온 경력(jobs) ','로 연결해서 string 타입으로 변환
             var t = ""
@@ -52,6 +53,18 @@ class RecyclerJobPostAdapter(private val items: ArrayList<JobPost>, val context:
             view.jobs.text = "경력: " + t
             view.date.text = "근무가능기간: "+item.start_date+"~"+item.end_date
             view.time.text = "근무가능시간: "+item.start_time+"~"+item.end_time
+
+            Log.d("userId", userId)
+            view.setOnClickListener {
+                Intent(context, JobPostActivity::class.java).apply {
+                    putExtra("postId", item.id)
+                    putExtra("profId", item.profile.related_user_id)
+                    putExtra("userId", userId)
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+                }.run { context.startActivity(this)}
+
+            }
         }
     }
 

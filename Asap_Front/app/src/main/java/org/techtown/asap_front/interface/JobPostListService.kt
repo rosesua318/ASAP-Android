@@ -13,4 +13,9 @@ interface JobPostListService {
     fun post(
             @Body jsonparams: JobPost
     )
+
+    @GET("/search_job/posts/{id}")
+    fun getPost(
+            @Path("id") id: Int
+    ) : Call<JobPost>
 }

@@ -37,12 +37,14 @@ class JobPostListFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var userId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+            userId = it.getString("userId") as String
         }
     }
 
@@ -50,7 +52,7 @@ class JobPostListFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.job_post_list_fragment, container, false)
-
+        Log.d("JobListUserId", userId)
         val sortingSpinner=view.jSortingSpinner
 
         loadData()
@@ -80,8 +82,8 @@ class JobPostListFragment : Fragment() {
         return view
     }
 
-    private fun setAdapter(postList: ArrayList<JobPost>, allJob: HashMap<Int, String>){
-        val adapter = RecyclerJobPostAdapter(postList, requireActivity(), allJob)
+    private fun setAdapter(postList: ArrayList<JobPost>, allJob: HashMap<Int, String>, userId: String){
+        val adapter = RecyclerJobPostAdapter(postList, requireActivity(), allJob, userId)
         job_recyclerview.adapter = adapter
         job_recyclerview.layoutManager = LinearLayoutManager(requireActivity())
     }
@@ -117,7 +119,7 @@ class JobPostListFragment : Fragment() {
                 if(response.isSuccessful){
                     val body = response.body()
                     body?.let{
-                        setAdapter(body, allJob)
+                        setAdapter(body, allJob, userId)
                     }
                 }
             }
