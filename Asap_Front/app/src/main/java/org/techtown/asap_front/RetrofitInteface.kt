@@ -2,7 +2,6 @@ package org.techtown.asap_front
 
 import retrofit2.Call
 import retrofit2.http.*
-import java.util.*
 import kotlin.collections.HashMap
 
 interface RetrofitInteface {
@@ -11,4 +10,15 @@ interface RetrofitInteface {
 
     @POST("/users/profiles/")
     fun executeSignup(@Body map: JoinSend): Call<Void?>?
+
+    @GET("/get_staff/{pk}/comments/")
+    fun executeComment1(
+            @Path("pk") pk: Int
+    ) : Call<Comment_1>
+
+    @GET("/search_job/{pk}/comments/")
+    fun executeComment2(
+            @Path("pk") pk: Int
+    ) : Call<Comment_1>
+
 }
