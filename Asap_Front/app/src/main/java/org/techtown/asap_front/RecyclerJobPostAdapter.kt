@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 import kotlin.collections.HashMap
 
-class RecyclerJobPostAdapter(private val items: ArrayList<JobPost>, val context: Context, val allJob: HashMap<Int, String>, val userId: String): RecyclerView.Adapter<RecyclerJobPostAdapter.ViewHolder>(){
+class RecyclerJobPostAdapter(private var items: ArrayList<JobPost>, val context: Context, val allJob: HashMap<Int, String>, val userId: String): RecyclerView.Adapter<RecyclerJobPostAdapter.ViewHolder>(){
     override fun getItemCount(): Int = items.size
     override fun onBindViewHolder(holder: RecyclerJobPostAdapter.ViewHolder, position: Int){
         val item = items[position]
@@ -30,6 +30,14 @@ class RecyclerJobPostAdapter(private val items: ArrayList<JobPost>, val context:
         val inflatedView = LayoutInflater.from(parent.context).inflate(R.layout.job_post_item, parent, false)
 
         return RecyclerJobPostAdapter.ViewHolder(inflatedView)
+    }
+
+    fun sortItem(it: ArrayList<JobPost>) {
+        items.clear()
+        for(i in it) {
+            items.add(i)
+        }
+        notifyDataSetChanged()
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v){
