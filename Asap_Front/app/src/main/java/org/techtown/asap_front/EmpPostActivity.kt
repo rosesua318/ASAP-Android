@@ -3,11 +3,13 @@ package org.techtown.asap_front
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import kotlinx.android.synthetic.main.emp_post_activity.*
-import kotlinx.android.synthetic.main.job_post_activity.*
 import org.techtown.asap_front.`interface`.CommentService
 import org.techtown.asap_front.`interface`.ProfileService
+import org.techtown.asap_front.data_object.Comment1_Adapter
 import org.techtown.asap_front.data_object.CommentBody
 import org.techtown.asap_front.data_object.PostResult
 import org.techtown.asap_front.data_object.Profile
@@ -18,10 +20,16 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class EmpPostActivity : AppCompatActivity() {
+    private lateinit var retrofitBuilder: RetrofitBuilder
+    private lateinit var retrofitInterface : RetrofitInteface
     var profile: Profile? = null
+    var comment1: Comment_1? = null
+    private lateinit var recyclerView : RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.emp_post_activity)
+        retrofitBuilder = RetrofitBuilder
+        retrofitInterface = retrofitBuilder.api
 
         var retrofit = Retrofit.Builder()
             .baseUrl("https://asap-ds.herokuapp.com")
@@ -34,6 +42,28 @@ class EmpPostActivity : AppCompatActivity() {
         // 디비에서 가져와서 해당 내용 텍스트뷰들에 할당
         // 게시물번호를 이용하여 해당하는 댓글만 디비에서 가져와서 리스트에 할당 -> 어댑터로 구성
 
+        recyclerView = findViewById(R.id.recyclerView_emp)
+        recyclerView.layoutManager = GridLayoutManager(this, 1)
+        val adapter = Comment1_Adapter()
+        val id = 1 // 임시 id, 연결되면 로그인에서 아이디 가져오기
+/*
+        val call = retrofitInterface.executeComment2(id)
+        call!!.enqueue(object : Callback<Comment_1?> {
+            override fun onResponse(call: Call<Comment_1?>, response: Response<Comment_1?>) {
+                comment1 = response.body()
+                println(response.body())
+                adapter.items.add(Comment_1(comment1!!.id,comment1!!.content,comment1!!.created_at,comment1!!.is_anon,comment1!!.post,comment1!!.profile))
+                recyclerView.adapter = adapter
+                // 확인 차 출력
+                println("응답코드 : " + response.code().toString()+response.message())
+            }
+
+            override fun onFailure(call: Call<Comment_1?>, t: Throwable) {
+                Toast.makeText(this@EmpPostActivity, t.message,
+                        Toast.LENGTH_LONG).show()
+            }
+        })
+*/
 
 
         val postId = 1
