@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.job_post_list_fragment.*
 import kotlinx.android.synthetic.main.job_post_list_fragment.view.*
 import org.techtown.asap_front.`interface`.JobPostListService
-import org.techtown.asap_front.data_object.Job
 import org.techtown.asap_front.data_object.JobPost
 import retrofit2.Call
 import retrofit2.Callback
@@ -91,17 +90,17 @@ class JobPostListFragment : Fragment() {
                 .build()
         var JobPostListService = retrofit.create(JobPostListService::class.java)
 
-        JobPostListService.getAllPosts().enqueue(object : Callback<JobPost>{
-            override fun onResponse(call: Call<JobPost>, response: Response<JobPost>) {
+        JobPostListService.getAllPosts().enqueue(object : Callback<ArrayList<JobPost>>{
+            override fun onResponse(call: Call<ArrayList<JobPost>>, response: Response<ArrayList<JobPost>>) {
                 if(response.isSuccessful){
                     val body = response.body()
                     body?.let{
-                        setAdapter(it.)
+                        setAdapter(body)
                     }
                 }
             }
 
-            override fun onFailure(call: Call<JobPost>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<JobPost>>, t: Throwable) {
                 Log.d("log",t.message.toString())
                 Log.d("log","fail")
             }

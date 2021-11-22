@@ -92,17 +92,17 @@ class EmpPostListFragment : Fragment() {
                 .build()
         var EmpPostListService = retrofit.create(EmpPostListService::class.java)
 
-        EmpPostListService.getAllPosts().enqueue(object : Callback<EmpPost> {
-            override fun onResponse(call: Call<EmpPost>, response: Response<EmpPost>) {
+        EmpPostListService.getAllPosts().enqueue(object : Callback<ArrayList<EmpPost>> {
+            override fun onResponse(call: Call<ArrayList<EmpPost>>, response: Response<ArrayList<EmpPost>>) {
                 if (response.isSuccessful) {
                     val body = response.body()
 
                     body?.let {
-                        setAdapter(it.)
+                        setAdapter(body)
                     }
                 }
             }
-            override fun onFailure(call: Call<EmpPost>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<EmpPost>>, t: Throwable) {
                     Log.d("log",t.message.toString())
                     Log.d("log","fail")
                 }
