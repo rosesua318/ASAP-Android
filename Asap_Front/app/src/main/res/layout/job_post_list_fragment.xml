@@ -38,9 +38,11 @@
             android:layout_weight="1"/>
         <Spinner
             android:id="@+id/jSortingSpinner"
-            android:layout_width="80dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"/>
+            android:layout_margin="5dp"
+            android:textSize="15dp"
+            android:entries="@array/jobpost_sort"/>
     </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
