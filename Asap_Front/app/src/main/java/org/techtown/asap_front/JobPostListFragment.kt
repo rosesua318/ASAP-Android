@@ -2,6 +2,7 @@ package org.techtown.asap_front
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.job_post_list_fragment.*
 import kotlinx.android.synthetic.main.job_post_list_fragment.view.*
 import org.techtown.asap_front.`interface`.JobPostListService
+import org.techtown.asap_front.`interface`.JobService
+import org.techtown.asap_front.`interface`.SortService
+import org.techtown.asap_front.data_object.Job
 import org.techtown.asap_front.data_object.JobPost
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
@@ -30,12 +37,16 @@ class JobPostListFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var userId: String = ""
+
+    private var adapter : RecyclerJobPostAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+            userId = it.getString("userId") as String
         }
     }
 
@@ -43,7 +54,7 @@ class JobPostListFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.job_post_list_fragment, container, false)
-
+        Log.d("JobListUserId", userId)
         val sortingSpinner=view.jSortingSpinner
 
         loadData()
@@ -56,12 +67,58 @@ class JobPostListFragment : Fragment() {
             }
         }
 
-        sortingSpinner.setSelection(1)
+        var retrofit = Retrofit.Builder()
+                .baseUrl("https://asap-ds.herokuapp.com")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        var sortService = retrofit.create(SortService::class.java)
+        var allJob = HashMap<Int, String>()
+        var jobService = retrofit.create(JobService::class.java)
+
+        jobService.getJobs().enqueue(object: Callback<List<Job>> {
+            override fun onResponse(call: Call<List<Job>>, response: Response<List<Job>>) {
+                var jobs = response.body()
+
+                if(jobs != null) {
+                    for(i in jobs.indices) {
+                        allJob.put(jobs.get(i).id, jobs.get(i).job_name)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Job>>, t: Throwable) {
+                Log.d("log",t.message.toString())
+                Log.d("log","fail")
+            }
+
+        })
+
+
         sortingSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val data = resources.getStringArray(R.array.jobpost_sort)
 
                 //선택된 정렬기준 전송
+                Log.d("sortingspinner", data[position].toString())
+                if(data[position].toString().equals("근무시작시간순")) {
+                    sortService.getEarlyStartJob().enqueue(object: Callback<ArrayList<JobPost>> {
+                        override fun onResponse(call: Call<ArrayList<JobPost>>, response: Response<ArrayList<JobPost>>) {
+                            if(response.isSuccessful){
+                                val body = response.body()
+                                body?.let{
+                                    //setAdapter(body, allJob, userId)
+                                    Log.d("sort body", body.toString())
+                                    adapter?.sortItem(body)
+                                }
+                            }
+                        }
+
+                        override fun onFailure(call: Call<ArrayList<JobPost>>, t: Throwable) {
+                            Log.d("log",t.message.toString())
+                        }
+
+                    })
+                }
                 //재정렬된 포스트 데이터 가져와
                 //리사이클러뷰 재출력
             }
@@ -73,10 +130,12 @@ class JobPostListFragment : Fragment() {
         return view
     }
 
-    private fun setAdapter(postList: ArrayList<JobPost>){
-        val adapter = RecyclerJobPostAdapter(postList, requireActivity())
+    private fun setAdapter(postList: ArrayList<JobPost>, allJob: HashMap<Int, String>, userId: String){
+        adapter = RecyclerJobPostAdapter(postList, requireActivity(), allJob, userId)
         job_recyclerview.adapter = adapter
         job_recyclerview.layoutManager = LinearLayoutManager(requireActivity())
+
+
     }
     private fun loadData(){
         var retrofit = Retrofit.Builder()
@@ -84,13 +143,34 @@ class JobPostListFragment : Fragment() {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         var JobPostListService = retrofit.create(JobPostListService::class.java)
-/*
+
+        var allJob = HashMap<Int, String>()
+        var jobService = retrofit.create(JobService::class.java)
+
+        jobService.getJobs().enqueue(object: Callback<List<Job>> {
+            override fun onResponse(call: Call<List<Job>>, response: Response<List<Job>>) {
+                var jobs = response.body()
+
+                if(jobs != null) {
+                    for(i in jobs.indices) {
+                        allJob.put(jobs.get(i).id, jobs.get(i).job_name)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Job>>, t: Throwable) {
+                Log.d("log",t.message.toString())
+                Log.d("log","fail")
+            }
+
+        })
+
         JobPostListService.getAllPosts().enqueue(object : Callback<ArrayList<JobPost>>{
             override fun onResponse(call: Call<ArrayList<JobPost>>, response: Response<ArrayList<JobPost>>) {
                 if(response.isSuccessful){
                     val body = response.body()
                     body?.let{
-                        setAdapter(body)
+                        setAdapter(body, allJob, userId)
                     }
                 }
             }
@@ -100,7 +180,7 @@ class JobPostListFragment : Fragment() {
                 Log.d("log","fail")
             }
         })
-*/
+
     }
     companion object {
         /**
