@@ -6,7 +6,6 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface RecommService {
-    @FormUrlEncoded
     @POST("/users/recomms/")
     fun recommend(
         @Body jsonParams: RecommBody

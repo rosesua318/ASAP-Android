@@ -165,7 +165,9 @@ class EmpPostActivity : AppCompatActivity() {
                     profile = response.body()
 
                     val intent = Intent(act, ProfileActivity::class.java)
-                    intent.putExtra("realted_user_id", profile?.related_user_id)
+                    intent.putExtra("userId", userId!!.toInt())
+                    Log.d("EmpProfId", profId.toString())
+                    intent.putExtra("related_user_id", profId)
                     intent.putExtra("nick", profile?.nickname)
                     intent.putExtra("introduction", profile?.introduction)
                     intent.putParcelableArrayListExtra("jobs", profile?.jobs)

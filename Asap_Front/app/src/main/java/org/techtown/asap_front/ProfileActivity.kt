@@ -20,11 +20,14 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_activity)
 
-        var userId = 1 // 사용자 userId(나중에 로그인에서부터 받아옴)
+        var userId = intent.getIntExtra("userId", 0)
 
         // 디비에 있는 추천수, 경력, 자기소개 내용 가져오기
-        var related_userId = intent.getStringExtra("related_user_id")
+        var related_userId = intent.getIntExtra("related_user_id", 0)
+        Log.d("profileUserId", userId.toString())
+        Log.d("profileRelated", related_userId.toString())
         var nick = intent.getStringExtra("nick")
+        Log.d("profileNick", nick!!)
         var intro = intent.getStringExtra("introduction")
         var jobs = intent.getParcelableArrayListExtra<Job>("jobs")
         var recomms_cnt = intent.getIntExtra("recomms_cnt", 0)
@@ -66,7 +69,7 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         recommBtn.setOnClickListener {
-            val data = RecommBody(related_userId!!.toInt(), related_userId!!.toInt())
+            val data = RecommBody(userId, related_userId)
             recommService.recommend(data).enqueue(object : Callback<PostResult> {
                 override fun onResponse(call: Call<PostResult>, response: Response<PostResult>) {
                     Log.d("log",response.toString())
