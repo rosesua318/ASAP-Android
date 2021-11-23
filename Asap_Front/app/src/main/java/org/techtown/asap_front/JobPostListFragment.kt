@@ -42,7 +42,6 @@ class JobPostListFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private lateinit var userId: String
     lateinit var mContext: Context
 
     private var userId: String = ""
@@ -66,56 +65,64 @@ class JobPostListFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.job_post_list_fragment, container, false)
         Log.d("JobUserId", userId)
-        val sortingSpinner=view.jSortingSpinner
-        
+        val sortingSpinner = view.jSortingSpinner
+
         loadData()
 
         view.jWriteBtn.setOnClickListener {
-            activity?.let{
+            activity?.let {
                 val intent = Intent(it, JobPostingActivity::class.java)
                 startActivity(intent)
             }
         }
 
         var retrofit = Retrofit.Builder()
-                .baseUrl("https://asap-ds.herokuapp.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
+            .baseUrl("https://asap-ds.herokuapp.com")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
         var sortService = retrofit.create(SortService::class.java)
         var allJob = HashMap<Int, String>()
         var jobService = retrofit.create(JobService::class.java)
 
-        jobService.getJobs().enqueue(object: Callback<List<Job>> {
+        jobService.getJobs().enqueue(object : Callback<List<Job>> {
             override fun onResponse(call: Call<List<Job>>, response: Response<List<Job>>) {
                 var jobs = response.body()
 
-                if(jobs != null) {
-                    for(i in jobs.indices) {
+                if (jobs != null) {
+                    for (i in jobs.indices) {
                         allJob.put(jobs.get(i).id, jobs.get(i).job_name)
                     }
                 }
             }
 
             override fun onFailure(call: Call<List<Job>>, t: Throwable) {
-                Log.d("log",t.message.toString())
-                Log.d("log","fail")
+                Log.d("log", t.message.toString())
+                Log.d("log", "fail")
             }
 
         })
 
 
-        sortingSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        sortingSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 val data = resources.getStringArray(R.array.jobpost_sort)
 
                 //선택된 정렬기준 전송
                 Log.d("sortingspinner", data[position].toString())
-                if(data[position].toString().equals("근무시작시간순")) {
-                    sortService.getEarlyStartJob().enqueue(object: Callback<ArrayList<JobPost>> {
-                        override fun onResponse(call: Call<ArrayList<JobPost>>, response: Response<ArrayList<JobPost>>) {
-                            if(response.isSuccessful){
+                if (data[position].toString().equals("근무시작시간순")) {
+                    sortService.getEarlyStartJob().enqueue(object : Callback<ArrayList<JobPost>> {
+                        override fun onResponse(
+                            call: Call<ArrayList<JobPost>>,
+                            response: Response<ArrayList<JobPost>>
+                        ) {
+                            if (response.isSuccessful) {
                                 val body = response.body()
-                                body?.let{
+                                body?.let {
                                     //setAdapter(body, allJob, userId)
                                     Log.d("sort body", body.toString())
                                     adapter?.sortItem(body)
@@ -124,7 +131,7 @@ class JobPostListFragment : Fragment() {
                         }
 
                         override fun onFailure(call: Call<ArrayList<JobPost>>, t: Throwable) {
-                            Log.d("log",t.message.toString())
+                            Log.d("log", t.message.toString())
                         }
 
                     })
@@ -137,6 +144,8 @@ class JobPostListFragment : Fragment() {
                 TODO("Not yet implemented")
             }
         }
+        return view
+    }
 
 
     private fun setAdapter(postList: ArrayList<JobPost>, allJob: HashMap<Int, String>, userId: String, nickname: String){
@@ -191,7 +200,6 @@ class JobPostListFragment : Fragment() {
             }
         })
 
-        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
