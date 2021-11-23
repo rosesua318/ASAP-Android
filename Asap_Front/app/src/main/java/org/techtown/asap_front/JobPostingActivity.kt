@@ -21,16 +21,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
-class JobPostingActivity : AppCompatActivity() {// JobPostListFragment.onDataPassListener {
-    lateinit var jobPostListFragment: JobPostListFragment
+class JobPostingActivity : AppCompatActivity() {
     private var userId: String = ""
-    lateinit var component:JobPostingActivity
-    lateinit var fragmentTransaction: FragmentTransaction
-    //override fun onDataPass(data: String?) {
-        //Log.d("pass", ""+data)
-        //val userId_str = data as String
-        //userId = userId_str.toInt()
-    //}
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.job_posting_activity)
@@ -40,7 +33,6 @@ class JobPostingActivity : AppCompatActivity() {// JobPostListFragment.onDataPas
             userId = intent.getStringExtra("userId") as String
             Log.d("JobUserId", userId)
         }
-        //val userId = userId_str.toInt()
 
         //데이트피커
         jStartDate.minDate = System.currentTimeMillis()
@@ -88,11 +80,7 @@ class JobPostingActivity : AppCompatActivity() {// JobPostListFragment.onDataPas
 
         jbtn.setOnClickListener{//완료버튼 클릭 시 입력한 정보 변수에 저장, 데이터 전송
             val title=jTitle.text.toString()
-            //val profile=
             val content=jContent.text.toString()
-            //경력 정보, 텍스트필드 내용->,로 split해서 리스트 타입 token으로 변환
-            //val joblist = jJoblist.text.toString()
-            //val token = joblist.split(", ")
 
             //날짜(start, end)
             val startDate = jStartDate.year.toString()+"-"+(jStartDate.month+1).toString()+"-"+jStartDate.dayOfMonth.toString()
@@ -111,7 +99,8 @@ class JobPostingActivity : AppCompatActivity() {// JobPostListFragment.onDataPas
                     Log.d("log", "jobpost: "+jobPost)
                     Toast.makeText(this@JobPostingActivity, "수정되었습니다", Toast.LENGTH_SHORT).show()
 
-                    finish()
+                    val intent1 = Intent(this@JobPostingActivity, MainActivity::class.java)
+                    startActivity(intent1)
                 }
 
                 override fun onFailure(call: Call<PostResult>, t: Throwable) {
