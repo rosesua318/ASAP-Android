@@ -52,9 +52,11 @@ class EmpPostActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recyclerView_emp)
         recyclerView.layoutManager = GridLayoutManager(this, 1)
-        val adapter = Comment1_Adapter()
         val userId = intent.getStringExtra("userId")?.toInt()
-        val call = retrofitInterface.executeComment2(1)
+
+        val postId = intent.getIntExtra("postId", 0)
+        val call = retrofitInterface.executeComment2(postId)
+        val adapter = Comment1_Adapter(postId)
 
         call!!.enqueue(object : Callback<ArrayList<Comment_1>> {
             override fun onResponse(call: Call<ArrayList<Comment_1>>, response: Response<ArrayList<Comment_1>>) {
@@ -95,7 +97,6 @@ class EmpPostActivity : AppCompatActivity() {
             }
         }
 
-        val postId = intent.getIntExtra("postId", 0)
         val profId = intent.getIntExtra("profId", 0)
         val nickname = intent.getStringExtra("nickname")
         var allJob = HashMap<Int, String>()
@@ -125,7 +126,7 @@ class EmpPostActivity : AppCompatActivity() {
             }
 
         })
-/*
+
         var empPostListService = retrofit.create(EmpPostListService::class.java)
         empPostListService.getPost(postId).enqueue(object : Callback<EmpPost> {
             override fun onResponse(call: Call<EmpPost>, response: Response<EmpPost>) {
@@ -156,7 +157,7 @@ class EmpPostActivity : AppCompatActivity() {
             }
 
         })
-*/
+
         postEmpNick.setOnClickListener {
             profileService.getProfile(profId).enqueue(object: Callback<Profile> {
                 override fun onResponse(call: Call<Profile>, response: Response<Profile>) {

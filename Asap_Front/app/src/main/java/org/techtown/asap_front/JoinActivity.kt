@@ -42,7 +42,7 @@ class JoinActivity : AppCompatActivity() {
         signBtn = findViewById(R.id.signupBtn)
 
         val sex_ : Int
-        if(rButton1.isChecked){ sex_ = 0 }
+        if(rButton1.isChecked==true){ sex_ = 0 }
         else { sex_ = 1 }
 
         // 회원가입 버튼 클릭 시
@@ -53,7 +53,7 @@ class JoinActivity : AppCompatActivity() {
             }
             // 회원가입 성공 시
             else {
-                val map = JoinSend(edtName.text.toString()," ", "null",related_user(edtNum.text.toString(),edtID.text.toString(),edtPW.text.toString(),edtAge.text.toString().toInt(), sex_, edtPW.text.toString()))
+                val map = JoinSend(edtName.text.toString()," ", "null",related_user(edtNum.text.toString(),edtID.text.toString(),edtPW.text.toString(),edtAge.text.toString().toInt(), sex_, "Qkrgydnjs99"))
                 println(map) // 보내는 데이터 확인
 
                 val call = retrofitInterface.executeSignup(map)

@@ -13,7 +13,7 @@ import org.techtown.asap_front.R
 
 // 어댑터는 보여지는 View와 그 View에 올릴 Data를 연결하는 일종의 Bridge
 // 뷰홀더 데이터 효율적으로 관리
-class Comment1_Adapter : RecyclerView.Adapter<Comment1_Adapter.ViewHolder>() {
+class Comment1_Adapter(var postId:Int) : RecyclerView.Adapter<Comment1_Adapter.ViewHolder>() {
     var items = ArrayList<Comment_1>()
 
     //뷰홀더 생성
@@ -40,18 +40,19 @@ class Comment1_Adapter : RecyclerView.Adapter<Comment1_Adapter.ViewHolder>() {
         init{
             itemView.setOnClickListener{
                 // 프로필로 넘어가기
-
             }
         }
         fun setItem(item: Comment_1){
             if(item.is_anon){
-                itemView.commentNick.text = "익명"
+                if(postId != item.profile){
+                    itemView.commentNick.text = "비밀 댓글"
+                    itemView.commentContent.text = "게시글 작성자만 읽을 수 있습니다."
+                }
             }
             else{
                 itemView.commentNick.text = item.created_at
+                itemView.commentContent.text = item.content
             }
-            itemView.commentContent.text = item.content
-
         }
     }
 }

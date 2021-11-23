@@ -56,9 +56,9 @@ class JobPostActivity : AppCompatActivity() {
         // 게시물번호를 이용하여 해당하는 댓글만 디비에서 가져와서 리스트에 할당 -> 어댑터로 구성
 
         // 아래는 테스트 코드
-        adapter1 = Comment1_Adapter()
-
-        val call = retrofitInterface.executeComment1(userId!!.toInt())
+        adapter1 = Comment1_Adapter(1)
+        val postId = intent.getIntExtra("postId", 0)
+        val call = retrofitInterface.executeComment1(postId)
 
         call!!.enqueue(object : Callback<ArrayList<Comment_1>> {
             override fun onResponse(call: Call<ArrayList<Comment_1>>, response: Response<ArrayList<Comment_1>>) {
@@ -97,7 +97,7 @@ class JobPostActivity : AppCompatActivity() {
         }
 
 
-        val postId = intent.getIntExtra("postId", 0)
+
         val profId = intent.getIntExtra("profId", 0)
         val nickname = intent.getStringExtra("nickname")
         var allJob = HashMap<Int, String>()
