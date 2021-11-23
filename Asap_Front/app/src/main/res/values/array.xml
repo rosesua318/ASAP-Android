@@ -11,6 +11,7 @@
     <string-array name="job">
         <item>서빙</item>
         <item>주방·조리</item>
+        <item>카페</item>
         <item>매장관리·판매</item>
         <item>영화관·공연장</item>
         <item>청소·미화</item>
@@ -28,6 +29,5 @@
         <item>버스·셔틀 운전</item>
         <item>발렛파킹</item>
         <item>택배·배송기사</item>
-        <item>카페</item>
     </string-array>
 </resources>

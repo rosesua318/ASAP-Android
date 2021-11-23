@@ -28,11 +28,6 @@ class JobPostingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.job_posting_activity)
 
-        //사용자 id
-        //if(intent.hasExtra("userId")){
-        //    userId = intent.getStringExtra("userId") as String
-        //    Log.d("JobUserId", userId)
-        //}
         userId = intent.getStringExtra("userId")
         Log.d("JobUserId", userId!!)
 
@@ -44,7 +39,6 @@ class JobPostingActivity : AppCompatActivity() {
         jEndTime.setIs24HourView(true)
 
         var jobList = ArrayList<Int>()
-        var allJob = HashMap<String, Int>()
 
         var retrofit = Retrofit.Builder()
             .baseUrl("https://asap-ds.herokuapp.com")
@@ -69,9 +63,7 @@ class JobPostingActivity : AppCompatActivity() {
                         jJoblist.text = jText + ", " + data[p2].toString()
                     }
 
-                    if(allJob.containsKey(data[p2].toString())) {
-                        jobList.add(allJob.get(data[p2].toString())!!)
-                    }
+                    jobList.add(p2+1) //(선택된 포지션+1) 배열에 추가
                 }
             }
 
