@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
-import androidx.fragment.app.FragmentTransaction
 import kotlinx.android.synthetic.main.job_posting_activity.*
 import org.techtown.asap_front.`interface`.JobPostListService
 import org.techtown.asap_front.data_object.JobPost
@@ -91,7 +90,7 @@ class JobPostingActivity : AppCompatActivity() {
                     Log.d("log",response.toString())
                     Log.d("log", response.body().toString())
                     Log.d("log", "jobpost: "+jobPost)
-                    Toast.makeText(this@JobPostingActivity, "수정되었습니다", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@JobPostingActivity, "작성되었습니다", Toast.LENGTH_SHORT).show()
 
                     val intent1 = Intent(this@JobPostingActivity, MainActivity::class.java)
                     startActivity(intent1)
