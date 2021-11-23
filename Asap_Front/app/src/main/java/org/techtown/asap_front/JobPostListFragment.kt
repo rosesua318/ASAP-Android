@@ -44,7 +44,7 @@ class JobPostListFragment : Fragment() {
 
     lateinit var mContext: Context
 
-    private var userId: String = ""
+    private lateinit var userId: String
     private var nickname: String = ""
 
     private var adapter : RecyclerJobPostAdapter? = null
@@ -72,6 +72,7 @@ class JobPostListFragment : Fragment() {
         view.jWriteBtn.setOnClickListener {
             activity?.let {
                 val intent = Intent(it, JobPostingActivity::class.java)
+                intent.putExtra("userId", userId)
                 startActivity(intent)
             }
         }
