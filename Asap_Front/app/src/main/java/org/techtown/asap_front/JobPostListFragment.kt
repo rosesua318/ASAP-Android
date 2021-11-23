@@ -1,6 +1,7 @@
 package org.techtown.asap_front
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.job_post_list_fragment.*
 import kotlinx.android.synthetic.main.job_post_list_fragment.view.*
@@ -38,6 +40,13 @@ class JobPostListFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var userId: String = ""
+    lateinit var mContext: Context
+    //var jobPostingActivity:JobPostingActivity?=null
+
+    //interface onDataPassListener {
+        //fun onDataPass(data:String?)
+    //}
+    //lateinit var dataPassListener: onDataPassListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +61,7 @@ class JobPostListFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.job_post_list_fragment, container, false)
-        Log.d("JobListUserId", userId)
+        Log.d("JobUserId", userId)
         val sortingSpinner=view.jSortingSpinner
 
         loadData()
@@ -62,6 +71,7 @@ class JobPostListFragment : Fragment() {
             activity?.let{
                 val intent = Intent(it, JobPostingActivity::class.java)
                 startActivity(intent)
+                //dataPassListener.onDataPass(userId)
             }
         }
 
@@ -130,6 +140,48 @@ class JobPostListFragment : Fragment() {
         })
 
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.d("프래그먼트","onViewCreated")
+        loadData()
+        view.jWriteBtn.setOnClickListener {//구직작성 액티비티로 이동
+            //?
+            activity?.let{
+                val intent = Intent(it, JobPostingActivity::class.java)
+                startActivity(intent)
+                //dataPassListener.onDataPass(userId)
+            }
+        }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        Log.d("프래그먼트","onActivityCreated")
+    }
+
+    override fun onAttach(activity: Activity) {
+        super.onAttach(activity)
+        Log.d("프래그먼트","onAttached")
+        if(context is MainActivity)
+            mContext=context as MainActivity
+    }
+    override fun onPause() {
+        super.onPause()
+        Log.d("프래그먼트","onPause")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("프래그먼트","onResume")
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        Log.d("프래그먼트","onViewStateRestored")
+    }
+
+
     companion object {
         /**
          * Use this factory method to create a new instance of

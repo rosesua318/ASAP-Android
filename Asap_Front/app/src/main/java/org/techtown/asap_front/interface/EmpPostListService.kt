@@ -1,6 +1,7 @@
 package org.techtown.asap_front.`interface`
 
 import org.techtown.asap_front.data_object.EmpPost
+import org.techtown.asap_front.data_object.EmpPostModel
 import org.techtown.asap_front.data_object.PostResult
 import retrofit2.Call
 import retrofit2.http.Body
@@ -15,7 +16,7 @@ interface EmpPostListService {
 
     @POST("/get_staff/posts/")
     fun post(
-        @Body jsonparams: EmpPost
+        @Body jsonparams: EmpPostModel
     ) : Call<PostResult>
 
     @GET("/get_staff/posts/{id}")
