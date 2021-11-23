@@ -65,6 +65,7 @@ class EmpPostListFragment : Fragment() {
             //?
             activity?.let{
                 val intent = Intent(it, EmpPostingActivity::class.java)
+                intent.putExtra("userId", userId)
                 startActivity(intent)
             }
         }

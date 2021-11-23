@@ -22,17 +22,19 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
 class JobPostingActivity : AppCompatActivity() {
-    private var userId: String = ""
+    private var userId: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.job_posting_activity)
 
         //사용자 id
-        if(intent.hasExtra("userId")){
-            userId = intent.getStringExtra("userId") as String
-            Log.d("JobUserId", userId)
-        }
+        //if(intent.hasExtra("userId")){
+        //    userId = intent.getStringExtra("userId") as String
+        //    Log.d("JobUserId", userId)
+        //}
+        userId = intent.getStringExtra("userId")
+        Log.d("JobUserId", userId!!)
 
         //데이트피커
         jStartDate.minDate = System.currentTimeMillis()
@@ -91,7 +93,7 @@ class JobPostingActivity : AppCompatActivity() {
             val endTime = jEndTime.hour.toString()+":"+jEndTime.minute.toString()+":00"
             
             //정보 전송
-            val jobPost = JobPostModel(userId.toInt(), title, jobList, startDate, endDate, startTime, endTime, content)
+            val jobPost = JobPostModel(userId!!.toInt(), title, jobList, startDate, endDate, startTime, endTime, content)
             jobPostListService.post(jobPost).enqueue(object: Callback<PostResult>{
                 override fun onResponse(call: Call<PostResult>, response: Response<PostResult>) {
                     Log.d("log",response.toString())
