@@ -1,6 +1,7 @@
 package org.techtown.asap_front.`interface`
 
 import org.techtown.asap_front.data_object.JobPost
+import org.techtown.asap_front.data_object.JobPostModel
 import org.techtown.asap_front.data_object.PostResult
 import org.techtown.asap_front.data_object.RecommBody
 import retrofit2.Call
@@ -12,7 +13,7 @@ interface JobPostListService {
 
     @POST("/search_job/posts/")
     fun post(
-            @Body jsonparams: JobPost
+            @Body jsonparams: JobPostModel
     ) : Call<PostResult>
 
     @GET("/search_job/posts/{id}")

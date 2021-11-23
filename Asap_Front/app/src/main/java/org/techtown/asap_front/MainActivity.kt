@@ -39,6 +39,10 @@ class MainActivity() : AppCompatActivity(){
         var login_ID = intent.getStringExtra("login_ID")
         nickname = intent.getStringExtra("nickname").toString()
 
+        //val intent1 = Intent(this, JobPostingActivity::class.java)
+        //intent1.putExtra("userId", user_id)
+        //startActivity(intent1)
+
         nav.setOnNavigationItemSelectedListener(onBottomNavItemSelectedListener)
 
         //기본화면

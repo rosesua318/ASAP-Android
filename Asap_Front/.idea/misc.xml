@@ -4,10 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/2021-SoftwareEngineering/local/ASAP-Android/Asap_Front/app/src/main/res/layout/emp_post_list_fragment.xml" value="0.1082427536231884" />
-        <entry key="..\:/2021-SoftwareEngineering/local/ASAP-Android/Asap_Front/app/src/main/res/layout/emp_posting_activity.xml" value="0.1082427536231884" />
+        <entry key="..\:/2021-SoftwareEngineering/local/ASAP-Android/Asap_Front/app/src/main/res/layout/emp_posting_activity.xml" value="0.16799999999999998" />
         <entry key="..\:/2021-SoftwareEngineering/local/ASAP-Android/Asap_Front/app/src/main/res/layout/job_post_list_fragment.xml" value="0.1082427536231884" />
-        <entry key="..\:/2021-SoftwareEngineering/local/ASAP-Android/Asap_Front/app/src/main/res/layout/job_posting_activity.xml" value="0.1082427536231884" />
+        <entry key="..\:/2021-SoftwareEngineering/local/ASAP-Android/Asap_Front/app/src/main/res/layout/job_posting_activity.xml" value="0.2" />
         <entry key="..\:/2021-SoftwareEngineering/local/ASAP-Android/Asap_Front/app/src/main/res/layout/mypage_fragment.xml" value="0.1082427536231884" />
+        <entry key="..\:/2021-SoftwareEngineering/local/ASAP-Android/Asap_Front/app/src/main/res/layout/profile_activity.xml" value="0.1578125" />
       </map>
     </option>
   </component>
