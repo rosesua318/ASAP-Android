@@ -1,16 +1,19 @@
 package org.techtown.asap_front.data_object
 
+
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.comment_item.view.*
 import org.techtown.asap_front.Comment_1
+import org.techtown.asap_front.ProfileActivity
 import org.techtown.asap_front.R
 
 // 어댑터는 보여지는 View와 그 View에 올릴 Data를 연결하는 일종의 Bridge
 // 뷰홀더 데이터 효율적으로 관리
-class Comment1_Adapter : RecyclerView.Adapter<Comment1_Adapter.ViewHolder>() {
+class Comment1_Adapter(var userId:Int, var profId:Int) : RecyclerView.Adapter<Comment1_Adapter.ViewHolder>() {
     var items = ArrayList<Comment_1>()
 
     //뷰홀더 생성
@@ -25,7 +28,6 @@ class Comment1_Adapter : RecyclerView.Adapter<Comment1_Adapter.ViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        print("아이템 사이즈 : "+items.size)
         if (items != null) {
             return items.size
         } else {
@@ -37,12 +39,23 @@ class Comment1_Adapter : RecyclerView.Adapter<Comment1_Adapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         init{
             itemView.setOnClickListener{
-                println("아무거나 ")
+                // 프로필로 넘어가기
             }
         }
         fun setItem(item: Comment_1){
-            itemView.commentContent.text = "item.content"
-            itemView.commentNick.text = "item.profile.toString()"
+            if(item.is_anon){
+                if(userId != profId){
+                    itemView.commentNick.text = "비밀 댓글"
+                    itemView.commentContent.text = "게시글 작성자만 읽을 수 있습니다."
+                } else {
+                    itemView.commentNick.text = item.created_at
+                    itemView.commentContent.text = item.content
+                }
+            }
+            else{
+                itemView.commentNick.text = item.created_at
+                itemView.commentContent.text = item.content
+            }
         }
     }
 }

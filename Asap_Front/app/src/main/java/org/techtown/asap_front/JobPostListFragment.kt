@@ -1,5 +1,6 @@
 package org.techtown.asap_front
 
+
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -16,6 +17,7 @@ import kotlinx.android.synthetic.main.job_post_list_fragment.*
 import kotlinx.android.synthetic.main.job_post_list_fragment.view.*
 import org.techtown.asap_front.`interface`.JobPostListService
 import org.techtown.asap_front.`interface`.JobService
+import org.techtown.asap_front.`interface`.SortService
 import org.techtown.asap_front.data_object.Job
 import org.techtown.asap_front.data_object.JobPost
 import retrofit2.Call
@@ -39,8 +41,15 @@ class JobPostListFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
     private lateinit var userId: String
     lateinit var mContext: Context
+
+    private var userId: String = ""
+    private var nickname: String = ""
+
+    private var adapter : RecyclerJobPostAdapter? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +57,7 @@ class JobPostListFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
             userId = it.getString("userId") as String
+            nickname = it.getString("nickname") as String
         }
     }
 
@@ -57,7 +67,8 @@ class JobPostListFragment : Fragment() {
         val view = inflater.inflate(R.layout.job_post_list_fragment, container, false)
         Log.d("JobUserId", userId)
         val sortingSpinner=view.jSortingSpinner
-
+        
+        loadData()
 
         view.jWriteBtn.setOnClickListener {
             activity?.let{
@@ -66,11 +77,58 @@ class JobPostListFragment : Fragment() {
             }
         }
 
+        var retrofit = Retrofit.Builder()
+                .baseUrl("https://asap-ds.herokuapp.com")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        var sortService = retrofit.create(SortService::class.java)
+        var allJob = HashMap<Int, String>()
+        var jobService = retrofit.create(JobService::class.java)
+
+        jobService.getJobs().enqueue(object: Callback<List<Job>> {
+            override fun onResponse(call: Call<List<Job>>, response: Response<List<Job>>) {
+                var jobs = response.body()
+
+                if(jobs != null) {
+                    for(i in jobs.indices) {
+                        allJob.put(jobs.get(i).id, jobs.get(i).job_name)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Job>>, t: Throwable) {
+                Log.d("log",t.message.toString())
+                Log.d("log","fail")
+            }
+
+        })
+
+
         sortingSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val data = resources.getStringArray(R.array.jobpost_sort)
 
                 //선택된 정렬기준 전송
+                Log.d("sortingspinner", data[position].toString())
+                if(data[position].toString().equals("근무시작시간순")) {
+                    sortService.getEarlyStartJob().enqueue(object: Callback<ArrayList<JobPost>> {
+                        override fun onResponse(call: Call<ArrayList<JobPost>>, response: Response<ArrayList<JobPost>>) {
+                            if(response.isSuccessful){
+                                val body = response.body()
+                                body?.let{
+                                    //setAdapter(body, allJob, userId)
+                                    Log.d("sort body", body.toString())
+                                    adapter?.sortItem(body)
+                                }
+                            }
+                        }
+
+                        override fun onFailure(call: Call<ArrayList<JobPost>>, t: Throwable) {
+                            Log.d("log",t.message.toString())
+                        }
+
+                    })
+                }
                 //재정렬된 포스트 데이터 가져와
                 //리사이클러뷰 재출력
             }
@@ -80,11 +138,20 @@ class JobPostListFragment : Fragment() {
             }
         }
 
+
+    private fun setAdapter(postList: ArrayList<JobPost>, allJob: HashMap<Int, String>, userId: String, nickname: String){
+        adapter = RecyclerJobPostAdapter(postList, requireActivity(), allJob, userId, nickname)
+        job_recyclerview.adapter = adapter
+        job_recyclerview.layoutManager = LinearLayoutManager(requireActivity())
+    }
+    private fun loadData(){
+
         var retrofit = Retrofit.Builder()
             .baseUrl("https://asap-ds.herokuapp.com")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         var JobPostListService = retrofit.create(JobPostListService::class.java)
+
         var allJob = HashMap<Int, String>()
         var jobService = retrofit.create(JobService::class.java)
 
@@ -111,9 +178,9 @@ class JobPostListFragment : Fragment() {
                 if(response.isSuccessful){
                     val body = response.body()
                     body?.let{
-                        val adapter = RecyclerJobPostAdapter(body, requireActivity(), allJob, userId)
-                        job_recyclerview.adapter = adapter
-                        job_recyclerview.layoutManager = LinearLayoutManager(requireActivity())
+
+                        setAdapter(body, allJob, userId, nickname)
+
                     }
                 }
             }

@@ -16,13 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".JoinActivity" />
         <activity android:name=".JobPostActivity" />
         <activity android:name=".EmpPostingActivity" />
         <activity android:name=".JobPostingActivity" />
         <activity android:name=".EmpPostActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".JoinActivity" />
         <activity android:name=".MainActivity" />
     </application>
 

@@ -14,11 +14,11 @@ interface RetrofitInteface {
     @GET("/get_staff/{pk}/comments/")
     fun executeComment1(
             @Path("pk") pk: Int
-    ) : Call<Comment_1>
+    ) : Call<ArrayList<Comment_1>>
 
     @GET("/search_job/{pk}/comments/")
     fun executeComment2(
             @Path("pk") pk: Int
-    ) : Call<Comment_1>
+    ) : Call<ArrayList<Comment_1>>
 
 }
