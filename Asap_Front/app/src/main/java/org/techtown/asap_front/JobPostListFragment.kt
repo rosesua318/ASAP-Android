@@ -39,7 +39,7 @@ class JobPostListFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var userId: String = ""
+    private lateinit var userId: String
     lateinit var mContext: Context
     //var jobPostingActivity:JobPostingActivity?=null
 
@@ -64,7 +64,7 @@ class JobPostListFragment : Fragment() {
         Log.d("JobUserId", userId)
         val sortingSpinner=view.jSortingSpinner
 
-        loadData()
+        //loadData()
 
         view.jWriteBtn.setOnClickListener {//구직작성 액티비티로 이동
             //?
@@ -88,19 +88,11 @@ class JobPostListFragment : Fragment() {
                 TODO("Not yet implemented")
             }
         }
-        return view
-    }
 
-    private fun setAdapter(postList: ArrayList<JobPost>, allJob: HashMap<Int, String>, userId: String){
-        val adapter = RecyclerJobPostAdapter(postList, requireActivity(), allJob, userId)
-        job_recyclerview.adapter = adapter
-        job_recyclerview.layoutManager = LinearLayoutManager(requireActivity())
-    }
-    private fun loadData(){
         var retrofit = Retrofit.Builder()
-                .baseUrl("https://asap-ds.herokuapp.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
+            .baseUrl("https://asap-ds.herokuapp.com")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
         var JobPostListService = retrofit.create(JobPostListService::class.java)
         var allJob = HashMap<Int, String>()
         var jobService = retrofit.create(JobService::class.java)
@@ -128,7 +120,9 @@ class JobPostListFragment : Fragment() {
                 if(response.isSuccessful){
                     val body = response.body()
                     body?.let{
-                        setAdapter(body, allJob, userId)
+                        val adapter = RecyclerJobPostAdapter(body, requireActivity(), allJob, userId)
+                        job_recyclerview.adapter = adapter
+                        job_recyclerview.layoutManager = LinearLayoutManager(requireActivity())
                     }
                 }
             }
@@ -139,20 +133,73 @@ class JobPostListFragment : Fragment() {
             }
         })
 
+        return view
     }
+
+    //private fun setAdapter(postList: ArrayList<JobPost>, allJob: HashMap<Int, String>, userId: String){
+    //    val adapter = RecyclerJobPostAdapter(postList, requireActivity(), allJob, userId)
+    //    job_recyclerview.adapter = adapter
+    //    job_recyclerview.layoutManager = LinearLayoutManager(requireActivity())
+    //}
+    //private fun loadData(){
+    //    var retrofit = Retrofit.Builder()
+    //            .baseUrl("https://asap-ds.herokuapp.com")
+    //            .addConverterFactory(GsonConverterFactory.create())
+    //            .build()
+    //    var JobPostListService = retrofit.create(JobPostListService::class.java)
+    //    var allJob = HashMap<Int, String>()
+    //    var jobService = retrofit.create(JobService::class.java)
+//
+    //    jobService.getJobs().enqueue(object: Callback<List<Job>> {
+    //        override fun onResponse(call: Call<List<Job>>, response: Response<List<Job>>) {
+    //            var jobs = response.body()
+//
+    //            if(jobs != null) {
+    //                for(i in jobs.indices) {
+    //                   allJob.put(jobs.get(i).id, jobs.get(i).job_name)
+    //                }
+    //            }
+    //        }
+//
+    //        override fun onFailure(call: Call<List<Job>>, t: Throwable) {
+    //            Log.d("log",t.message.toString())
+    //            Log.d("log","fail")
+    //        }
+//
+    //    })
+
+    //    JobPostListService.getAllPosts().enqueue(object : Callback<ArrayList<JobPost>>{
+    //        override fun onResponse(call: Call<ArrayList<JobPost>>, response: Response<ArrayList<JobPost>>) {
+    //            if(response.isSuccessful){
+    //                val body = response.body()
+    //                body?.let{
+    //                    val adapter = RecyclerJobPostAdapter(body, requireActivity(), allJob, userId)
+    //                    job_recyclerview.adapter = adapter
+    //                    job_recyclerview.layoutManager = LinearLayoutManager(requireActivity())
+    //                }
+    //            }
+    //        }
+//
+    //        override fun onFailure(call: Call<ArrayList<JobPost>>, t: Throwable) {
+    //            Log.d("log",t.message.toString())
+    //            Log.d("log","fail")
+    //        }
+    //    })
+//
+    //}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("프래그먼트","onViewCreated")
-        loadData()
-        view.jWriteBtn.setOnClickListener {//구직작성 액티비티로 이동
+        //loadData()
+        //view.jWriteBtn.setOnClickListener {//구직작성 액티비티로 이동
             //?
-            activity?.let{
-                val intent = Intent(it, JobPostingActivity::class.java)
-                startActivity(intent)
+        //    activity?.let{
+        //        val intent = Intent(it, JobPostingActivity::class.java)
+        //        startActivity(intent)
                 //dataPassListener.onDataPass(userId)
-            }
-        }
+        //    }
+        //}
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -163,8 +210,8 @@ class JobPostListFragment : Fragment() {
     override fun onAttach(activity: Activity) {
         super.onAttach(activity)
         Log.d("프래그먼트","onAttached")
-        if(context is MainActivity)
-            mContext=context as MainActivity
+        if(context is JobPostingActivity)
+            mContext=context as JobPostingActivity
     }
     override fun onPause() {
         super.onPause()
@@ -174,6 +221,12 @@ class JobPostListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         Log.d("프래그먼트","onResume")
+        //loadData()
+    }
+
+    override fun onStop() {
+        super.onStop()
+
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {

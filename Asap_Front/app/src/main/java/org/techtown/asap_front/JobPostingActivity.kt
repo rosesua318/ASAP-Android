@@ -8,8 +8,10 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
+import androidx.fragment.app.FragmentTransaction
 import kotlinx.android.synthetic.main.job_posting_activity.*
 import org.techtown.asap_front.`interface`.JobPostListService
+import org.techtown.asap_front.data_object.JobPost
 import org.techtown.asap_front.data_object.JobPostModel
 import org.techtown.asap_front.data_object.PostResult
 import retrofit2.Call
@@ -23,6 +25,7 @@ class JobPostingActivity : AppCompatActivity() {// JobPostListFragment.onDataPas
     lateinit var jobPostListFragment: JobPostListFragment
     private var userId: String = ""
     lateinit var component:JobPostingActivity
+    lateinit var fragmentTransaction: FragmentTransaction
     //override fun onDataPass(data: String?) {
         //Log.d("pass", ""+data)
         //val userId_str = data as String
