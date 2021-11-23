@@ -56,9 +56,10 @@ class JobPostActivity : AppCompatActivity() {
         // 게시물번호를 이용하여 해당하는 댓글만 디비에서 가져와서 리스트에 할당 -> 어댑터로 구성
 
         // 아래는 테스트 코드
-        adapter1 = Comment1_Adapter(1)
+        val profId = intent.getIntExtra("profId", 0)
+        val adapter1 = Comment1_Adapter(userId!!.toInt(), profId)
         val postId = intent.getIntExtra("postId", 0)
-        val call = retrofitInterface.executeComment1(postId)
+        val call = retrofitInterface.executeComment2(postId)
 
         call!!.enqueue(object : Callback<ArrayList<Comment_1>> {
             override fun onResponse(call: Call<ArrayList<Comment_1>>, response: Response<ArrayList<Comment_1>>) {
@@ -68,6 +69,9 @@ class JobPostActivity : AppCompatActivity() {
                     indexNum += 1
                     commentArray.add(Comment_1(comment1!![i].id,comment1!![i].content,"",comment1!![i].is_anon,comment1!![i].post,comment1!![i].profile))
                 }
+                // 확인 차 출력
+                println("indexNum 값 : "+indexNum)
+                println("응답코드 : " + response.code().toString()+response.message())
             }
 
             override fun onFailure(call: Call<ArrayList<Comment_1>>, t: Throwable) {
@@ -98,7 +102,7 @@ class JobPostActivity : AppCompatActivity() {
 
 
 
-        val profId = intent.getIntExtra("profId", 0)
+
         val nickname = intent.getStringExtra("nickname")
         var allJob = HashMap<Int, String>()
 
@@ -106,7 +110,7 @@ class JobPostActivity : AppCompatActivity() {
 
         Log.d("JobPostUserId", userId!!)
         if(profId == userId?.toInt()) {
-            empSecret.setEnabled(false)
+            jobSecret.setEnabled(false)
         }
 
         var jobService = retrofit.create(JobService::class.java)
@@ -198,11 +202,20 @@ class JobPostActivity : AppCompatActivity() {
                 // 공개 댓글로 구분하여 디비에 저장
             }
             // 비밀 댓글로 구분하여 디비에 저장
-            val comment = CommentBody(postId, profId, jobEditComment.text.toString(), b)
+            val comment = CommentBody(postId, userId!!.toInt(), jobEditComment.text.toString(), b)
             commentService.addCommentJob(comment).enqueue(object: Callback<PostResult> {
                 override fun onResponse(call: Call<PostResult>, response: Response<PostResult>) {
                     Log.d("log",response.toString())
                     Log.d("log", response.body().toString())
+                    try {
+                        val Intent = getIntent()
+                        finish()
+                        overridePendingTransition(0, 0)
+                        startActivity(intent)
+                        overridePendingTransition(0, 0)
+                    } catch(e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
 
                 override fun onFailure(call: Call<PostResult>, t: Throwable) {
