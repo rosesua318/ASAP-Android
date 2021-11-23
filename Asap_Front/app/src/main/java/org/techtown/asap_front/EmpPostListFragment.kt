@@ -1,5 +1,7 @@
 package org.techtown.asap_front
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -37,8 +39,13 @@ class EmpPostListFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    lateinit var mContext: Context
+
     private var userId: String = ""
     private var nickname: String = ""
+
+    private var adapter : RecyclerEmpPostAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +63,6 @@ class EmpPostListFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.emp_post_list_fragment, container, false)
-
         val sortingSpinner=view.eSortingSpinner
 
         loadData()
@@ -87,7 +93,7 @@ class EmpPostListFragment : Fragment() {
     }
 
     private fun setAdapter(postList: ArrayList<EmpPost>, allJob: HashMap<Int, String>, userId: String, nickname: String){
-        val adapter = RecyclerEmpPostAdapter(postList, requireActivity(), allJob, userId, nickname)
+        adapter = RecyclerEmpPostAdapter(postList, requireActivity(), allJob, userId, nickname)
         emp_recyclerview.adapter = adapter
         emp_recyclerview.layoutManager = LinearLayoutManager(requireActivity())
     }
@@ -134,6 +140,45 @@ class EmpPostListFragment : Fragment() {
                     Log.d("log","fail")
                 }
         })
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.d("프래그먼트","onViewCreated")
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        Log.d("프래그먼트","onActivityCreated")
+    }
+
+    override fun onAttach(activity: Activity) {
+        super.onAttach(activity)
+        Log.d("프래그먼트", "onAttached")
+        if(context is EmpPostingActivity)
+            mContext=context as EmpPostingActivity
+        else if(context is MainActivity)
+            mContext=context as MainActivity
+    }
+    override fun onPause() {
+        super.onPause()
+        Log.d("프래그먼트","onPause")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("프래그먼트","onResume")
+        //loadData()
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        Log.d("프래그먼트","onViewStateRestored")
     }
     companion object {
         /**
