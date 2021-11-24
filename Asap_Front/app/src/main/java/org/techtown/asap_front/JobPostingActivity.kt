@@ -46,7 +46,7 @@ class JobPostingActivity : AppCompatActivity() {
         var jobPostListService = retrofit.create(JobPostListService::class.java)
         jSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                val data = resources.getStringArray(R.array.job)
+                val data = resources.getStringArray(R.array.select_job)
                 val jText = jJoblist.text.toString()
                 val token = jText.split(", ")
 
@@ -65,7 +65,7 @@ class JobPostingActivity : AppCompatActivity() {
                         jJoblist.text = jText + ", " + data[p2].toString()
                     }
 
-                    jobList.add(p2) //(선택된 포지션) 배열에 추가
+                    jobList.add(p2+1) //(선택된 포지션+1) 배열에 추가
                 }
             }
 
