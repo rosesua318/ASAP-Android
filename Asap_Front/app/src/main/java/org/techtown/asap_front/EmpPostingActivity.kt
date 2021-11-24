@@ -64,7 +64,7 @@ class EmpPostingActivity : AppCompatActivity() {
                         eJoblist.text = eText + ", " + data[p2].toString()
                     }
 
-                    jobList.add(p2+1) //(선택된 포지션+1) 배열에 추가
+                    jobList.add(p2) //(선택된 포지션) 배열에 추가
                 }
 
             }
