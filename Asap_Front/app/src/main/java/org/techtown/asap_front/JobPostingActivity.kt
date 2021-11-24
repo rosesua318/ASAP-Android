@@ -87,23 +87,29 @@ class JobPostingActivity : AppCompatActivity() {
             val endTime = jEndTime.hour.toString()+":"+jEndTime.minute.toString()+":00"
             
             //정보 전송
-            val jobPost = JobPostModel(userId!!.toInt(), title, jobList, startDate, endDate, startTime, endTime, content)
-            jobPostListService.post(jobPost).enqueue(object: Callback<PostResult>{
-                override fun onResponse(call: Call<PostResult>, response: Response<PostResult>) {
-                    Log.d("log",response.toString())
-                    Log.d("log", response.body().toString())
-                    Log.d("log", "jobpost: "+jobPost)
-                    Toast.makeText(this@JobPostingActivity, "작성되었습니다", Toast.LENGTH_SHORT).show()
+            if(title==null || content==null || jobList.isEmpty()){
+                Toast.makeText(this@JobPostingActivity, "입력하지 않은 항목이 있습니다", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                val jobPost = JobPostModel(userId!!.toInt(), title, jobList, startDate, endDate, startTime, endTime, content)
+                jobPostListService.post(jobPost).enqueue(object: Callback<PostResult>{
+                    override fun onResponse(call: Call<PostResult>, response: Response<PostResult>) {
+                        Log.d("log",response.toString())
+                        Log.d("log", response.body().toString())
+                        Log.d("log", "jobpost: "+jobPost)
+                        Toast.makeText(this@JobPostingActivity, "작성되었습니다", Toast.LENGTH_SHORT).show()
 
-                    val intent1 = Intent(this@JobPostingActivity, MainActivity::class.java)
-                    startActivity(intent1)
-                }
+                        val intent1 = Intent(this@JobPostingActivity, MainActivity::class.java)
+                        startActivity(intent1)
+                    }
 
-                override fun onFailure(call: Call<PostResult>, t: Throwable) {
-                    Log.d("log",t.message.toString())
-                    Log.d("log","post fail")
-                }
-            })
+                    override fun onFailure(call: Call<PostResult>, t: Throwable) {
+                        Log.d("log",t.message.toString())
+                        Log.d("log","post fail")
+                    }
+                })
+            }
+
         }
     }
 }
