@@ -54,6 +54,9 @@ class EmpPostingActivity : AppCompatActivity() {
                     if (token[t].equals(data[p2]))
                         b = false
                 }
+                if(p2 == 0){
+                    b = false
+                }
                 if (b) {
                     if (eJoblist.text.equals("")) {
                         eJoblist.text = data[p2].toString()
@@ -85,23 +88,29 @@ class EmpPostingActivity : AppCompatActivity() {
             val endTime = eEndTime.hour.toString()+":"+eEndTime.minute.toString()+":00"
 
             //정보 전송
-            val empPost = EmpPostModel(userId!!.toInt(), title, hourly_pay.toInt(), jobList, startDate, endDate, startTime, endTime, content)
-            empPostListService.post(empPost).enqueue(object: Callback<PostResult>{
-                override fun onResponse(call: Call<PostResult>, response: Response<PostResult>) {
-                    Log.d("log",response.toString())
-                    Log.d("log", response.body().toString())
-                    Log.d("log", "emppost: "+empPost)
-                    Toast.makeText(this@EmpPostingActivity, "작성되었습니다", Toast.LENGTH_SHORT).show()
+            if(title==null || content==null || jobList.isEmpty() || hourly_pay==null) {
+                Toast.makeText(this@EmpPostingActivity, "입력하지 않은 항목이 있습니다", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                val empPost = EmpPostModel(userId!!.toInt(), title, hourly_pay.toInt(), jobList, startDate, endDate, startTime, endTime, content)
+                empPostListService.post(empPost).enqueue(object: Callback<PostResult>{
+                    override fun onResponse(call: Call<PostResult>, response: Response<PostResult>) {
+                        Log.d("log",response.toString())
+                        Log.d("log", response.body().toString())
+                        Log.d("log", "emppost: "+empPost)
+                        Toast.makeText(this@EmpPostingActivity, "작성되었습니다", Toast.LENGTH_SHORT).show()
 
-                    val intent1 = Intent(this@EmpPostingActivity, MainActivity::class.java)
-                    startActivity(intent1)
-                }
+                        val intent1 = Intent(this@EmpPostingActivity, MainActivity::class.java)
+                        startActivity(intent1)
+                    }
 
-                override fun onFailure(call: Call<PostResult>, t: Throwable) {
-                    Log.d("log",t.message.toString())
-                    Log.d("log","post fail")
-                }
-            })
+                    override fun onFailure(call: Call<PostResult>, t: Throwable) {
+                        Log.d("log",t.message.toString())
+                        Log.d("log","post fail")
+                    }
+                })
+            }
+
         }
     }
 }

@@ -79,10 +79,10 @@
                     android:layout_marginRight="10dp"/>
                 <Spinner
                     android:id="@+id/eSpinner"
-                    android:layout_width="80dp"
+                    android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:textSize="15dp"
-                    android:entries="@array/job"/>
+                    android:entries="@array/select_job"/>
             </LinearLayout>
 
             <LinearLayout
