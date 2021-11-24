@@ -80,8 +80,8 @@ class EmpPostingActivity : AppCompatActivity() {
             val hourly_pay=pay.text.toString()
 
             //날짜(start, end)
-            val startDate = eStartDate.year.toString()+"-"+(eStartDate.month.toString()+1)+"-"+eStartDate.dayOfMonth.toString()
-            val endDate = eEndDate.year.toString()+"-"+(eEndDate.month.toString()+1)+"-"+eEndDate.dayOfMonth.toString()
+            val startDate = eStartDate.year.toString()+"-"+(eStartDate.month+1).toString()+"-"+eStartDate.dayOfMonth.toString()
+            val endDate = eEndDate.year.toString()+"-"+(eEndDate.month+1).toString()+"-"+eEndDate.dayOfMonth.toString()
 
             //시간(start, end)
             val startTime = eStartTime.hour.toString()+":"+eStartTime.minute.toString()+":00"
