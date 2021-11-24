@@ -54,6 +54,9 @@ class EmpPostingActivity : AppCompatActivity() {
                     if (token[t].equals(data[p2]))
                         b = false
                 }
+                if(p2 == 0){
+                    b = false
+                }
                 if (b) {
                     if (eJoblist.text.equals("")) {
                         eJoblist.text = data[p2].toString()

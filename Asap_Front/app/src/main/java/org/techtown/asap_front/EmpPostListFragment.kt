@@ -42,7 +42,7 @@ class EmpPostListFragment : Fragment() {
 
     lateinit var mContext: Context
 
-    private var userId: String = ""
+    private lateinit var userId: String
     private var nickname: String = ""
 
     private var adapter : RecyclerEmpPostAdapter? = null

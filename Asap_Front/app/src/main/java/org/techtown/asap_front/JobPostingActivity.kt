@@ -55,6 +55,9 @@ class JobPostingActivity : AppCompatActivity() {
                     if (token[t].equals(data[p2]))
                         b = false
                 }
+                if(p2 == 0){
+                    b = false
+                }
                 if (b) {
                     if (jJoblist.text.equals("")) {
                         jJoblist.text = data[p2].toString()
